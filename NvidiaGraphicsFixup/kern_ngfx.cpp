@@ -905,10 +905,7 @@ IOReturn NGFX::NVDA_setAttributeForConnection(IONDRVFramebuffer *that , IOIndex 
                 {
                      return kIOReturnSuccess;
                 }
-//                if(that->getProvider()!=NULL&&strcmp("NVDA,Display-B",that->getProvider()->getName())==0)
-//                {
-//                    return kIOReturnSuccess;
-//                }
+
             }
                 break;
             case kConnectionPanelTimingDisable: DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:kConnectionPanelTimingDisable",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex);break;
