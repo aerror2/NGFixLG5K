@@ -6,6 +6,8 @@ An open source kernel extension providing patches for NVidia GPUs.
 #### Features
 -Fixes LG Ultrafine 5K + gtx1080(TI) blackscreen problem with only one cable -- by aerror 2017-12-17
 
+see https://www.tonymacx86.com/threads/nvidia-gtx1080-lg-ultrafine-5k-full-5k-60hz-success.240730/#post-1651508
+
 
 I make two patches:
 1.   NVDA::validateDetailedTiming, only return success when resolution is 3840x2160. It make LG ultrafine 5K can be light up with one cable. (Without this patch  LG ultrafine 5K just stay black always, no matter how I try). But it works flawly, In most of time screen show up for few seconds, then turn black again...
