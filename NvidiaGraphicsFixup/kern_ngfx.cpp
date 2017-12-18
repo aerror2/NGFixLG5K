@@ -225,9 +225,7 @@ void NGFX::processKext(KernelPatcher &patcher, size_t index, mach_vm_address_t a
                     else
                     {
                         SYSLOG("ngfx", "failed to resolve __ZN4NVDA22validateDetailedTimingEPvy");
-
                     }
-                    
                     
                     method_address = patcher.solveSymbol(index, "__ZN4NVDA25setAttributeForConnectionEijm");
                     if (method_address) {
@@ -239,7 +237,7 @@ void NGFX::processKext(KernelPatcher &patcher, size_t index, mach_vm_address_t a
                     {
                         SYSLOG("ngfx", "failed to resolve __ZN4NVDA25setAttributeForConnectionEijm");
                     }
-                     method_address = patcher.solveSymbol(index, "__ZN4NVDA25getAttributeForConnectionEijPm");
+                    method_address = patcher.solveSymbol(index, "__ZN4NVDA25getAttributeForConnectionEijPm");
                     if (method_address) {
                         DBGLOG("ngfx", "obtained __ZN4NVDA25getAttributeForConnectionEijPm");
                         patcher.clearError();
@@ -248,43 +246,479 @@ void NGFX::processKext(KernelPatcher &patcher, size_t index, mach_vm_address_t a
                     else
                     {
                         SYSLOG("ngfx", "failed to resolve __ZN4NVDA25getAttributeForConnectionEijPm");
-                        
+                    }
+                    
+                    method_address = patcher.solveSymbol(index, "__ZN4NVDA5startEP9IOService");
+                    if (method_address) {
+                        DBGLOG("ngfx", "obtained __ZN4NVDA5startEP9IOService");
+                        patcher.clearError();
+                        org_NVDA_start = reinterpret_cast<t_NVDA_start>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_start), true));
+                    }
+                    else
+                    {
+                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA5startEP9IOService");
+                    }
+                    method_address = patcher.solveSymbol(index, "__ZN4NVDA4stopEP9IOService");
+                    if (method_address) {
+                        DBGLOG("ngfx", "obtained __ZN4NVDA4stopEP9IOService");
+                        patcher.clearError();
+                        org_NVDA_stop = reinterpret_cast<t_NVDA_stop>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_stop), true));
+                    }
+                    else
+                    {
+                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA4stopEP9IOService");
+                    }
+                    
+                    method_address = patcher.solveSymbol(index, "__ZN4NVDA16enableControllerEv");
+                    if (method_address) {
+                        DBGLOG("ngfx", "obtained __ZN4NVDA16enableControllerEv");
+                        patcher.clearError();
+                        org_IONDRVFramebuffer_enableController = reinterpret_cast<t_IONDRVFramebuffer_enableController>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(IONDRVFramebuffer_enableController), true));
+                    }
+                    else
+                    {
+                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA16enableControllerEv");
+                    }
+                    
+                    method_address = patcher.solveSymbol(index, "__ZN4NVDA16getApertureRangeEi");
+                    if (method_address) {
+                        DBGLOG("ngfx", "obtained __ZN4NVDA16getApertureRangeEi");
+                        patcher.clearError();
+                        org_NVDA_getApertureRange = reinterpret_cast<t_NVDA_getApertureRange>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_getApertureRange), true));
+                    }
+                    else
+                    {
+                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA16getApertureRangeEi");
+                    }
+                    method_address = patcher.solveSymbol(index, "__ZN4NVDA28getInformationForDisplayModeEiP24IODisplayModeInformation");
+                    if (method_address) {
+                        DBGLOG("ngfx", "obtained __ZN4NVDA28getInformationForDisplayModeEiP24IODisplayModeInformation");
+                        patcher.clearError();
+                        org_NVDA_getInformationForDisplayMode = reinterpret_cast<t_NVDA_getInformationForDisplayMode>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_getInformationForDisplayMode), true));
+                    }
+                    else
+                    {
+                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA28getInformationForDisplayModeEiP24IODisplayModeInformation");
+                    }
+                    method_address = patcher.solveSymbol(index, "__ZN4NVDA12setAttributeEjm");
+                    if (method_address) {
+                        DBGLOG("ngfx", "obtained __ZN4NVDA12setAttributeEjm");
+                        patcher.clearError();
+                        org_NVDA_setAttribute = reinterpret_cast<t_NVDA_setAttribute>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_setAttribute), true));
+                    }
+                    else
+                    {
+                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA12setAttributeEjm");
+                    }
+                    method_address = patcher.solveSymbol(index, "__ZN4NVDA12getAttributeEjPm");
+                    if (method_address) {
+                        DBGLOG("ngfx", "obtained __ZN4NVDA12getAttributeEjPm");
+                        patcher.clearError();
+                        org_NVDA_getAttribute = reinterpret_cast<t_NVDA_getAttribute>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_getAttribute), true));
+                    }
+                    else
+                    {
+                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA12getAttributeEjPm");
                     }
 
+                    method_address = patcher.solveSymbol(index, "__ZN4NVDA5probeEP9IOServicePi");
+                    if (method_address) {
+                        DBGLOG("ngfx", "obtained __ZN4NVDA5probeEP9IOServicePi");
+                        patcher.clearError();
+                        org_NVDA_probe = reinterpret_cast<t_NVDA_probe>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_probe), true));
+                    }
+                    else
+                    {
+                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA5probeEP9IOServicePi");
+                    }
                     
-                    //__ZN4NVDA16enableControllerEv
-                    
-//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA16enableControllerEv");
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA25doHotplugInterruptServiceEP8OSObjectP22IOInterruptEventSourcei");
 //                    if (method_address) {
-//                        DBGLOG("ngfx", "obtained __ZN4NVDA16enableControllerEv");
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA25doHotplugInterruptServiceEP8OSObjectP22IOInterruptEventSourcei");
 //                        patcher.clearError();
-//                        org_enablecontroller = reinterpret_cast<t_enablecontroller>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(nvenablecontroller), true));
+//                        org_NVDA_doHotplugInterruptService = reinterpret_cast<t_NVDA_doHotplugInterruptService>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_doHotplugInterruptService), true));
 //                    }
 //                    else
 //                    {
-//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA16enableControllerEv");
-//
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA25doHotplugInterruptServiceEP8OSObjectP22IOInterruptEventSourcei");
 //                    }
-                    
-                    
-                    
-                    //__ZN4NVDA28getInformationForDisplayModeEiP24IODisplayModeInformation:        // NVDA::getInformationForDisplayMode(int, IODisplayModeInformation*)
-                    
-                   // using t_getInformationForDisplayMode = IOReturn (*)(IONDRVFramebuffer *that, IODisplayModeID mode,   IODisplayModeInformation * info  );
-                   // t_getInformationForDisplayMode  org_getInformationForDisplayMode{nullptr};
-                    
-//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA28getInformationForDisplayModeEiP24IODisplayModeInformation");
+//
+//
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA27doAudioHDCPInterruptServiceEP8OSObjectP22IOInterruptEventSourcei");
 //                    if (method_address) {
-//                        DBGLOG("ngfx", "obtained __ZN4NVDA28getInformationForDisplayModeEiP24IODisplayModeInformation");
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA27doAudioHDCPInterruptServiceEP8OSObjectP22IOInterruptEventSourcei");
 //                        patcher.clearError();
-//                        org_getInformationForDisplayMode = reinterpret_cast<t_getInformationForDisplayMode>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(getInformationForDisplayMode), true));
+//                        org_NVDA_doAudioHDCPInterruptService = reinterpret_cast<t_NVDA_doAudioHDCPInterruptService>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_doAudioHDCPInterruptService), true));
 //                    }
 //                    else
 //                    {
-//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA28getInformationForDisplayModeEiP24IODisplayModeInformation");
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA27doAudioHDCPInterruptServiceEP8OSObjectP22IOInterruptEventSourcei");
+//                    }
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA27doHDCPReadyInterruptServiceEP8OSObjectP22IOInterruptEventSourcei");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA27doHDCPReadyInterruptServiceEP8OSObjectP22IOInterruptEventSourcei");
+//                        patcher.clearError();
+//                        org_NVDA_doHDCPReadyInterruptService = reinterpret_cast<t_NVDA_doHDCPReadyInterruptService>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_doHDCPReadyInterruptService), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA27doHDCPReadyInterruptServiceEP8OSObjectP22IOInterruptEventSourcei");
+//                    }
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA13newUserClientEP4taskPvjPP12IOUserClient");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA13newUserClientEP4taskPvjPP12IOUserClient");
+//                        patcher.clearError();
+//                        org_NVDA_newUserClient = reinterpret_cast<t_NVDA_newUserClient>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_newUserClient), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA13newUserClientEP4taskPvjPP12IOUserClient");
+//                    }
+
 //
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA11setPropertyEPK8OSSymbolP8OSObject");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA11setPropertyEPK8OSSymbolP8OSObject");
+//                        patcher.clearError();
+//                        org_NVDA_setProperty = reinterpret_cast<t_NVDA_setProperty>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_setProperty), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA11setPropertyEPK8OSSymbolP8OSObject");
 //                    }
                     
+                    
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA18doHotPlugInterruptEv");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA18doHotPlugInterruptEv");
+//                        patcher.clearError();
+//                        org_NVDA_doHotPlugInterrupt = reinterpret_cast<t_NVDA_doHotPlugInterrupt>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_doHotPlugInterrupt), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA18doHotPlugInterruptEv");
+//                    }
+//
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA14doVBLInterruptEv");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA14doVBLInterruptEv");
+//                        patcher.clearError();
+//                        org_NVDA_doVBLInterrupt = reinterpret_cast<t_NVDA_doVBLInterrupt>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_doVBLInterrupt), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA14doVBLInterruptEv");
+//                    }
+                    
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA14DevTypeDisplayEP15IORegistryEntry");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA14DevTypeDisplayEP15IORegistryEntry");
+//                        patcher.clearError();
+//                        org_NVDA_DevTypeDisplay = reinterpret_cast<t_NVDA_DevTypeDisplay>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_DevTypeDisplay), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA14DevTypeDisplayEP15IORegistryEntry");
+//                    }
+
+//
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA8glkCloseEP9IOService");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA8glkCloseEP9IOService");
+//                        patcher.clearError();
+//                        org_NVDA_glkClose = reinterpret_cast<t_NVDA_glkClose>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_glkClose), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA8glkCloseEP9IOService");
+//                    }
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA8ScanListEP9IOService");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA8ScanListEP9IOService");
+//                        patcher.clearError();
+//                        org_NVDA_ScanList = reinterpret_cast<t_NVDA_ScanList>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_ScanList), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA8ScanListEP9IOService");
+//                    }
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA10InsertNodeEP9IOService");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA10InsertNodeEP9IOService");
+//                        patcher.clearError();
+//                        org_NVDA_InsertNode = reinterpret_cast<t_NVDA_InsertNode>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_InsertNode), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA10InsertNodeEP9IOService");
+//                    }
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA12initAppleMuxEP15IORegistryEntry");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA12initAppleMuxEP15IORegistryEntry");
+//                        patcher.clearError();
+//                        org_NVDA_initAppleMux = reinterpret_cast<t_NVDA_initAppleMux>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_initAppleMux), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA12initAppleMuxEP15IORegistryEntry");
+//                    }
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA11setAppleMuxEj");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA11setAppleMuxEj");
+//                        patcher.clearError();
+//                        org_NVDA_setAppleMux = reinterpret_cast<t_NVDA_setAppleMux>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_setAppleMux), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA11setAppleMuxEj");
+//                    }
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA7rmStartEP9IOServicej");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA7rmStartEP9IOServicej");
+//                        patcher.clearError();
+//                        org_NVDA_rmStart = reinterpret_cast<t_NVDA_rmStart>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_rmStart), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA7rmStartEP9IOServicej");
+//                    }
+
+                    
+                    
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA7glkOpenEP9IOService");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA7glkOpenEP9IOService");
+//                        patcher.clearError();
+//                        org_NVDA_glkOpen = reinterpret_cast<t_NVDA_glkOpen>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_glkOpen), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA7glkOpenEP9IOService");
+//                    }
+                    
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA36getNVAcceleratorPropertyFromRegistryEPKcPj");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA36getNVAcceleratorPropertyFromRegistryEPKcPj");
+//                        patcher.clearError();
+//                        org_NVDA_getNVAcceleratorPropertyFromRegistry = reinterpret_cast<t_NVDA_getNVAcceleratorPropertyFromRegistry>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_getNVAcceleratorPropertyFromRegistry), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA36getNVAcceleratorPropertyFromRegistryEPKcPj");
+//                    }
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA20callPlatformFunctionEPK8OSSymbolbPvS3_S3_S3_");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA20callPlatformFunctionEPK8OSSymbolbPvS3_S3_S3_");
+//                        patcher.clearError();
+//                        org_NVDA_callPlatformFunction = reinterpret_cast<t_NVDA_callPlatformFunction>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_callPlatformFunction), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA20callPlatformFunctionEPK8OSSymbolbPvS3_S3_S3_");
+//                    }
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA21mergeDevicePropertiesEPKcS1_");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA21mergeDevicePropertiesEPKcS1_");
+//                        patcher.clearError();
+//                        org_NVDA_mergeDeviceProperties = reinterpret_cast<t_NVDA_mergeDeviceProperties>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_mergeDeviceProperties), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA21mergeDevicePropertiesEPKcS1_");
+//                    }
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA33doGlkWindowServerTransitionNotifyEjjPjj");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA33doGlkWindowServerTransitionNotifyEjjPjj");
+//                        patcher.clearError();
+//                        org_NVDA_doGlkWindowServerTransitionNotify = reinterpret_cast<t_NVDA_doGlkWindowServerTransitionNotify>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_doGlkWindowServerTransitionNotify), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA33doGlkWindowServerTransitionNotifyEjjPjj");
+//                    }
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA13setGammaTableEjjjPv");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA13setGammaTableEjjjPv");
+//                        patcher.clearError();
+//                        org_NVDA_setGammaTable = reinterpret_cast<t_NVDA_setGammaTable>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_setGammaTable), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA13setGammaTableEjjjPv");
+//                    }
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA18setCLUTWithEntriesEP12IOColorEntryjjj");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA18setCLUTWithEntriesEP12IOColorEntryjjj");
+//                        patcher.clearError();
+//                        org_NVDA_setCLUTWithEntries = reinterpret_cast<t_NVDA_setCLUTWithEntries>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_setCLUTWithEntries), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA18setCLUTWithEntriesEP12IOColorEntryjjj");
+//                    }
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA22undefinedSymbolHandlerEPKcS1_");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA22undefinedSymbolHandlerEPKcS1_");
+//                        patcher.clearError();
+//                        org_NVDA_undefinedSymbolHandler = reinterpret_cast<t_NVDA_undefinedSymbolHandler>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_undefinedSymbolHandler), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA22undefinedSymbolHandlerEPKcS1_");
+//                    }
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA14copyACPIDeviceEP15IORegistryEntry");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA14copyACPIDeviceEP15IORegistryEntry");
+//                        patcher.clearError();
+//                        org_NVDA_copyACPIDevice = reinterpret_cast<t_NVDA_copyACPIDevice>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_copyACPIDevice), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA14copyACPIDeviceEP15IORegistryEntry");
+//                    }
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA21findAppleMuxSubdeviceEP15IORegistryEntryj");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA21findAppleMuxSubdeviceEP15IORegistryEntryj");
+//                        patcher.clearError();
+//                        org_NVDA_findAppleMuxSubdevice = reinterpret_cast<t_NVDA_findAppleMuxSubdevice>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_findAppleMuxSubdevice), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA21findAppleMuxSubdeviceEP15IORegistryEntryj");
+//                    }
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA20setAppleMuxSubdeviceEP20IOACPIPlatformDevicej");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA20setAppleMuxSubdeviceEP20IOACPIPlatformDevicej");
+//                        patcher.clearError();
+//                        org_NVDA_setAppleMuxSubdevice = reinterpret_cast<t_NVDA_setAppleMuxSubdevice>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_setAppleMuxSubdevice), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA20setAppleMuxSubdeviceEP20IOACPIPlatformDevicej");
+//                    }
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA11getAppleMuxEv");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA11getAppleMuxEv");
+//                        patcher.clearError();
+//                        org_NVDA_getAppleMux = reinterpret_cast<t_NVDA_getAppleMux>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_getAppleMux), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA11getAppleMuxEv");
+//                    }
+
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA10addIntrRegEjPv");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA10addIntrRegEjPv");
+//                        patcher.clearError();
+//                        org_NVDA_addIntrReg = reinterpret_cast<t_NVDA_addIntrReg>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_addIntrReg), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA10addIntrRegEjPv");
+//                    }
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA13removeIntrRegEPv");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA13removeIntrRegEPv");
+//                        patcher.clearError();
+//                        org_NVDA_removeIntrReg = reinterpret_cast<t_NVDA_removeIntrReg>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_removeIntrReg), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA13removeIntrRegEPv");
+//                    }
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA11findIntrRegEPv");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA11findIntrRegEPv");
+//                        patcher.clearError();
+//                        org_NVDA_findIntrReg = reinterpret_cast<t_NVDA_findIntrReg>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_findIntrReg), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA11findIntrRegEPv");
+//                    }
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA24registerForInterruptTypeEjPFvP8OSObjectPvES1_S2_PS2_");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA24registerForInterruptTypeEjPFvP8OSObjectPvES1_S2_PS2_");
+//                        patcher.clearError();
+//                        org_NVDA_registerForInterruptType = reinterpret_cast<t_NVDA_registerForInterruptType>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_registerForInterruptType), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA24registerForInterruptTypeEjPFvP8OSObjectPvES1_S2_PS2_");
+//                    }
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA19unregisterInterruptEPv");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA19unregisterInterruptEPv");
+//                        patcher.clearError();
+//                        org_NVDA_unregisterInterrupt = reinterpret_cast<t_NVDA_unregisterInterrupt>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_unregisterInterrupt), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA19unregisterInterruptEPv");
+//                    }
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA17setInterruptStateEPvj");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA17setInterruptStateEPvj");
+//                        patcher.clearError();
+//                        org_NVDA_setInterruptState = reinterpret_cast<t_NVDA_setInterruptState>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_setInterruptState), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA17setInterruptStateEPvj");
+//                    }
+                 
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA7messageEjP9IOServicePv");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA7messageEjP9IOServicePv");
+//                        patcher.clearError();
+//                        org_NVDA_message = reinterpret_cast<t_NVDA_message>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_message), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA7messageEjP9IOServicePv");
+//                    }
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA13createNVDCNubEj");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA13createNVDCNubEj");
+//                        patcher.clearError();
+//                        org_NVDA_createNVDCNub = reinterpret_cast<t_NVDA_createNVDCNub>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_createNVDCNub), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA13createNVDCNubEj");
+//                    }
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA24get10BPCFormatGLKSupportEPh");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA24get10BPCFormatGLKSupportEPh");
+//                        patcher.clearError();
+//                        org_NVDA_get10BPCFormatGLKSupport = reinterpret_cast<t_NVDA_get10BPCFormatGLKSupport>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_get10BPCFormatGLKSupport), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA24get10BPCFormatGLKSupportEPh");
+//                    }
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA32getIOPCIDeviceFromDeviceInstanceEjPP11IOPCIDevice");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA32getIOPCIDeviceFromDeviceInstanceEjPP11IOPCIDevice");
+//                        patcher.clearError();
+//                        org_NVDA_getIOPCIDeviceFromDeviceInstance = reinterpret_cast<t_NVDA_getIOPCIDeviceFromDeviceInstance>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_getIOPCIDeviceFromDeviceInstance), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA32getIOPCIDeviceFromDeviceInstanceEjPP11IOPCIDevice");
+//                    }
+//                    method_address = patcher.solveSymbol(index, "__ZN4NVDA34getIOPCIDevicePropertyFromRegistryEPKcPt");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN4NVDA34getIOPCIDevicePropertyFromRegistryEPKcPt");
+//                        patcher.clearError();
+//                        org_NVDA_getIOPCIDevicePropertyFromRegistry = reinterpret_cast<t_NVDA_getIOPCIDevicePropertyFromRegistry>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(NVDA_getIOPCIDevicePropertyFromRegistry), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN4NVDA34getIOPCIDevicePropertyFromRegistryEPKcPt");
+//                    }
+//                    
                     progressState |= ProcessingState::NVDAResmanRouted;
 
                 }
@@ -293,6 +727,51 @@ void NGFX::processKext(KernelPatcher &patcher, size_t index, mach_vm_address_t a
                 {
                     DBGLOG("ngfx", "found %s", kextIOGraphicsFamilyId);
 
+                    
+                    auto method_address = patcher.solveSymbol(index, "__ZN13IOFramebuffer7doSetupEb");
+                    if (method_address) {
+                        DBGLOG("ngfx", "obtained __ZN13IOFramebuffer7doSetupEb");
+                        patcher.clearError();
+                        org_IOFramebuffer_doSetup = reinterpret_cast<t_IOFramebuffer_doSetup>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(IOFramebuffer_doSetup), true));
+                    }
+                    else
+                    {
+                        SYSLOG("ngfx", "failed to resolve __ZN13IOFramebuffer7doSetupEb");
+                    }
+                    
+                    method_address = patcher.solveSymbol(index, "__ZN13IOFramebuffer14checkPowerWorkEj");
+                    if (method_address) {
+                        DBGLOG("ngfx", "obtained __ZN13IOFramebuffer14checkPowerWorkEj");
+                        patcher.clearError();
+                        org_IOFramebuffer_checkPowerWork = reinterpret_cast<t_IOFramebuffer_checkPowerWork>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(IOFramebuffer_checkPowerWork), true));
+                    }
+                    else
+                    {
+                        SYSLOG("ngfx", "failed to resolve __ZN13IOFramebuffer14checkPowerWorkEj");
+                    }
+                    
+                    method_address = patcher.solveSymbol(index, "__ZN13IOFramebuffer18dpProcessInterruptEv");
+                    if (method_address) {
+                        DBGLOG("ngfx", "obtained __ZN13IOFramebuffer18dpProcessInterruptEv");
+                        patcher.clearError();
+                        org_IOFramebuffer_dpProcessInterrupt = reinterpret_cast<t_IOFramebuffer_dpProcessInterrupt>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(IOFramebuffer_dpProcessInterrupt), true));
+                    }
+                    else
+                    {
+                        SYSLOG("ngfx", "failed to resolve __ZN13IOFramebuffer18dpProcessInterruptEv");
+                    }
+                    
+                    method_address = patcher.solveSymbol(index, "__ZN13IOFramebuffer4openEv");
+                    if (method_address) {
+                        DBGLOG("ngfx", "obtained __ZN13IOFramebuffer4openEv");
+                        patcher.clearError();
+                        org_IOFramebuffer_open = reinterpret_cast<t_IOFramebuffer_open>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(IOFramebuffer_open), true));
+                    }
+                    else
+                    {
+                        SYSLOG("ngfx", "failed to resolve __ZN13IOFramebuffer4openEv");
+                    }
+                    
 //                    auto method_address = patcher.solveSymbol(index, "__ZN13IOFramebuffer24extSetStartupDisplayModeEP8OSObjectPvP25IOExternalMethodArguments");
 //                    if (method_address) {
 //                        DBGLOG("ngfx", "obtained __ZN13IOFramebuffer24extSetStartupDisplayModeEP8OSObjectPvP25IOExternalMethodArguments");
@@ -381,6 +860,30 @@ void NGFX::processKext(KernelPatcher &patcher, size_t index, mach_vm_address_t a
                 else if (!(progressState & ProcessingState::NVDASupportRouted) && !strcmp(kextList[i].id, kextIONDRVSupportId))
                 {
                     DBGLOG("ngfx", "found %s", kextIONDRVSupportId);
+                    auto method_address = patcher.solveSymbol(index, "__ZN17IONDRVFramebuffer20processConnectChangeEPm");
+                    if (method_address) {
+                        DBGLOG("ngfx", "obtained __ZN17IONDRVFramebuffer20processConnectChangeEPm");
+                        patcher.clearError();
+                        org_IONDRVFramebuffer_processConnectChange = reinterpret_cast<t_IONDRVFramebuffer_processConnectChange>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(IONDRVFramebuffer_processConnectChange), true));
+                    }
+                    else
+                    {
+                        SYSLOG("ngfx", "failed to resolve __ZN17IONDRVFramebuffer20processConnectChangeEPm");
+                    }
+                    
+                    method_address = patcher.solveSymbol(index, "__ZN17IONDRVFramebuffer21setStartupDisplayModeEii");
+                    if (method_address) {
+                        DBGLOG("ngfx", "obtained __ZN17IONDRVFramebuffer21setStartupDisplayModeEii");
+                        patcher.clearError();
+                        org_setStartupDisplayMode = reinterpret_cast<t_setStartupDisplayMode>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(setStartupDisplayMode), true));
+                        
+                    }
+                    else
+                    {
+                        SYSLOG("ngfx", "failed to resolve __ZN17IONDRVFramebuffer21setStartupDisplayModeEii");
+                        
+                    }
+                    
                     
 //                    auto method_address = patcher.solveSymbol(index, "__ZN17IONDRVFramebuffer17setDetailedTimingEijPvy");
 //                    if (method_address) {
@@ -416,18 +919,7 @@ void NGFX::processKext(KernelPatcher &patcher, size_t index, mach_vm_address_t a
                     //__ZN17IONDRVFramebuffer21setStartupDisplayModeEii
                     
                     
-                    auto method_address = patcher.solveSymbol(index, "__ZN17IONDRVFramebuffer21setStartupDisplayModeEii");
-                    if (method_address) {
-                        DBGLOG("ngfx", "obtained __ZN17IONDRVFramebuffer21setStartupDisplayModeEii");
-                        patcher.clearError();
-                        org_setStartupDisplayMode = reinterpret_cast<t_setStartupDisplayMode>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(setStartupDisplayMode), true));
-                        
-                    }
-                    else
-                    {
-                        SYSLOG("ngfx", "failed to resolve __ZN17IONDRVFramebuffer21setStartupDisplayModeEii");
-                        
-                    }
+                
                     
                     //__ZN17IONDRVFramebuffer18setDetailedTimingsEP7OSArray
                     
@@ -700,8 +1192,8 @@ bool isValidTimev2(IODetailedTimingInformationV2        &v2)
 //        (v2.horizontalActive == 2160  &&  v2.verticalActive == 3840)
                ||
                 (v2.horizontalActive == 5120  &&  v2.verticalActive == 2880)
-//                ||
-        //        (v2.horizontalActive == 2560  &&  v2.verticalActive == 1440)
+//               ||
+//               (v2.horizontalActive == 2560  &&  v2.verticalActive == 1440)
            //     ||
             //    (v2.horizontalActive == 2560  &&  v2.verticalActive == 2880)
         )
@@ -832,97 +1324,104 @@ IOReturn NGFX::setStartupDisplayMode (IONDRVFramebuffer *that, IODisplayModeID d
 }
 
 
+const char * getIOAtrributeName(IOSelect &attribute, char *sztmp)
+{
+    switch(attribute)
+    {
+        case kConnectionFlags: return "kConnectionFlags"; break;
+        case kConnectionSyncEnable: return "kConnectionSyncEnable"; break;
+        case kConnectionSyncFlags: return "kConnectionSyncFlags"; break;
+        case kConnectionSupportsAppleSense: return "kConnectionSupportsAppleSense"; break;
+        case kConnectionSupportsLLDDCSense: return "kConnectionSupportsLLDDCSense"; break;
+        case kConnectionSupportsHLDDCSense: return "kConnectionSupportsHLDDCSense"; break;
+        case kConnectionEnable: return "kConnectionEnable"; break;
+        case kConnectionCheckEnable: return "kConnectionCheckEnable"; break;
+        case kConnectionProbe: return "kConnectionProbe"; break;
+        case kConnectionChanged: return "kConnectionChanged"; break;
+        case kConnectionPower: return "kConnectionPower"; break;
+        case kConnectionPostWake: return "kConnectionPostWake"; break;
+        case kConnectionDisplayParameterCount: return "kConnectionDisplayParameterCount"; break;
+        case kConnectionDisplayParameters: return "kConnectionDisplayParameters"; break;
+        case kConnectionOverscan: return "kConnectionOverscan"; break;
+        case kConnectionVideoBest: return "kConnectionVideoBest"; break;
+        case kConnectionRedGammaScale: return "kConnectionRedGammaScale"; break;
+        case kConnectionGreenGammaScale: return "kConnectionGreenGammaScale"; break;
+        case kConnectionBlueGammaScale: return "kConnectionBlueGammaScale"; break;
+        case kConnectionGammaScale: return "kConnectionGammaScale"; break;
+        case kConnectionFlushParameters: return "kConnectionFlushParameters"; break;
+        case kConnectionVBLMultiplier: return "kConnectionVBLMultiplier"; break;
+        case kConnectionHandleDisplayPortEvent: return "kConnectionHandleDisplayPortEvent"; break;
+        case kConnectionPanelTimingDisable: return "kConnectionPanelTimingDisable"; break;
+        case kConnectionColorMode: return "kConnectionColorMode"; break;
+        case kConnectionColorModesSupported: return "kConnectionColorModesSupported"; break;
+        case kConnectionColorDepthsSupported: return "kConnectionColorDepthsSupported"; break;
+        case kConnectionControllerDepthsSupported: return "kConnectionControllerDepthsSupported"; break;
+        case kConnectionControllerColorDepth: return "kConnectionControllerColorDepth"; break;
+        case kConnectionControllerDitherControl: return "kConnectionControllerDitherControl"; break;
+        case kConnectionDisplayFlags: return "kConnectionDisplayFlags"; break;
+        case kConnectionEnableAudio: return "kConnectionEnableAudio"; break;
+        case kConnectionAudioStreaming: return "kConnectionAudioStreaming"; break;
+        default:
+        {
+            sztmp[0] = attribute >>24 & 0xff;
+             sztmp[1] = attribute >>16 & 0xff;
+             sztmp[2] = attribute >>8 & 0xff;
+             sztmp[3] = attribute & 0xff;
+            sztmp[4] = 0;
+            snprintf(sztmp+4, 20, "(%X)",attribute);
+            return sztmp;
+        }
+    }
+    return NULL;
+}
+
+const char *getDisplayPortEventName(uintptr_t evt)
+{
+    switch (evt) {
+        case kIODPEventStart: return "kIODPEventStart=1"; break;
+        case kIODPEventIdle: return "kIODPEventIdle=2"; break;
+        case kIODPEventForceRetrain: return "kIODPEventForceRetrain=3"; break;
+        case kIODPEventRemoteControlCommandPending: return "kIODPEventRemoteControlCommandPending=256"; break;
+        case kIODPEventAutomatedTestRequest: return "kIODPEventAutomatedTestRequest=257"; break;
+        case kIODPEventContentProtection: return "kIODPEventContentProtection=258"; break;
+        case kIODPEventMCCS: return "kIODPEventMCCS=259"; break;
+        case kIODPEventSinkSpecific: return "kIODPEventSinkSpecific=260"; break;
+            
+        default:
+            return "notknow";
+            break;
+    }
+    
+    return NULL;
+}
 IOReturn NGFX::NVDA_setAttributeForConnection(IONDRVFramebuffer *that , IOIndex connectIndex,
                                                IOSelect attribute, uintptr_t value )
 {
     if (callbackNGFX && callbackNGFX->org_NVDA_setAttributeForConnection)
     {
-//        DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:%s begin ",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,(const char *)&attribute);
-        
-        switch(attribute)
+        char sztmp[30];
+        const char *attributeName =  getIOAtrributeName(attribute,sztmp);
+        if(attribute == kConnectionHandleDisplayPortEvent)
         {
-     
-                
-            case kConnectionFlags: DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:kConnectionFlags",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex);break;
-            case kConnectionSyncEnable: DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:kConnectionSyncEnable",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex);break;
-            case kConnectionSyncFlags: DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:kConnectionSyncFlags",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex);break;
-            case kConnectionSupportsAppleSense: DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:kConnectionSupportsAppleSense",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex);break;
-            case kConnectionSupportsLLDDCSense: DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:kConnectionSupportsLLDDCSense",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex);break;
-            case kConnectionSupportsHLDDCSense: DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:kConnectionSupportsHLDDCSense",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex);break;
-            case kConnectionEnable: DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:kConnectionEnable",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex);break;
-            case kConnectionCheckEnable: DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:kConnectionCheckEnable",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex);break;
-            case kConnectionProbe: DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:kConnectionProbe",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex);break;
-            case kConnectionChanged: DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:kConnectionChanged",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex);break;
-            case kConnectionPower: DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:kConnectionPower",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex);break;
-            case kConnectionPostWake: DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:kConnectionPostWake",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex);break;
-            case kConnectionDisplayParameterCount: DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:kConnectionDisplayParameterCount",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex);break;
-            case kConnectionDisplayParameters: DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:kConnectionDisplayParameters",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex);break;
-            case kConnectionOverscan: DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:kConnectionOverscan",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex);break;
-            case kConnectionVideoBest: DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:kConnectionVideoBest",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex);break;
-            case kConnectionRedGammaScale: DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:kConnectionRedGammaScale",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex);break;
-            case kConnectionGreenGammaScale: DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:kConnectionGreenGammaScale",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex);break;
-            case kConnectionBlueGammaScale: DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:kConnectionBlueGammaScale",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex);break;
-            case kConnectionGammaScale: DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:kConnectionGammaScale",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex);break;
-            case kConnectionFlushParameters: DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:kConnectionFlushParameters",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex);break;
-            case kConnectionVBLMultiplier: DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:kConnectionVBLMultiplier",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex);break;
-            case kConnectionHandleDisplayPortEvent:
+            uintptr_t evt= value!=0?(*((uintptr_t *)value)):0;
+            const char *eventname =getDisplayPortEventName(evt);
+            
+            DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:%s value:%s",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,attributeName, eventname);
+            
+            if(evt == kIODPEventIdle)
             {
-                uintptr_t evt= value!=0?(*((uintptr_t *)value)):0;
-                const char *eventname=(value==0)?"notset":"unknown";
-                switch (evt) {
-                    case  kIODPEventStart:
-                         eventname ="kIODPEventStart";
-                           break;
-                    case kIODPEventIdle:
-                         eventname ="kIODPEventIdle";
-                          break;
-                    case kIODPEventForceRetrain:
-                         eventname ="kIODPEventForceRetrain";
-                        break;
-                        
-                    case kIODPEventRemoteControlCommandPending:
-                         eventname ="kIODPEventRemoteControlCommandPending";
-                        break;
-                    case kIODPEventAutomatedTestRequest:
-                         eventname ="kIODPEventAutomatedTestRequest";
-                        break;
-                    case  kIODPEventContentProtection:
-                         eventname ="kIODPEventContentProtection";
-                        
-                        break;
-                    case kIODPEventMCCS:
-                         eventname ="kIODPEventMCCS";
-                        break;
-                    case kIODPEventSinkSpecific:
-                         eventname ="kIODPEventSinkSpecific";
-                        break;
-                    default:
-                        break;
-                }
-                DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:kConnectionHandleDisplayPortEvent value:%s",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex, eventname);
-                
-                if(kIODPEventIdle==evt)
-                {
-                     return kIOReturnSuccess;
-                }
+                DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:%s value:%s end SKIP IT",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,attributeName, eventname);
 
+                return kIOReturnSuccess;
             }
-                break;
-            case kConnectionPanelTimingDisable: DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:kConnectionPanelTimingDisable",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex);break;
-            case kConnectionColorMode: DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:kConnectionColorMode",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex);break;
-            case kConnectionColorModesSupported: DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:kConnectionColorModesSupported",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex);break;
-            case kConnectionColorDepthsSupported: DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:kConnectionColorDepthsSupported",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex);break;
-            case kConnectionControllerDepthsSupported: DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:kConnectionControllerDepthsSupported",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex);break;
-            case kConnectionControllerColorDepth: DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:kConnectionControllerColorDepth",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex);break;
-            case kConnectionControllerDitherControl: DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:kConnectionControllerDitherControl",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex);break;
-            case kConnectionDisplayFlags: DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:kConnectionDisplayFlags",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex);break;
-            case kConnectionEnableAudio: DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:kConnectionEnableAudio",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex);break;
-            case kConnectionAudioStreaming: DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:kConnectionAudioStreaming",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex);break;
-                
+        }
+        else
+        {
+             DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:%s",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,attributeName);
         }
         
         IOReturn ret = callbackNGFX->org_NVDA_setAttributeForConnection(that, connectIndex,attribute,value);
-        DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s ret %x ",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:%s ret %x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,attributeName,ret);
         return ret;
     }
     return kIOReturnSuccess;
@@ -932,59 +1431,667 @@ IOReturn NGFX::NVDA_getAttributeForConnection(IONDRVFramebuffer *that,IOIndex co
 {
     if (callbackNGFX && callbackNGFX->org_NVDA_getAttributeForConnection)
     {
+        char sztmp[30];
+
+         const char *attributeName =  getIOAtrributeName(attribute,sztmp);
+        
         DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s  attribute:%s  begin ",that->getName(),
-               that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",(const char*)&attribute);
+               that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",attributeName);
         
      
         IOReturn ret = callbackNGFX->org_NVDA_getAttributeForConnection(that,connectIndex,attribute,value);
         
-        switch ( attribute)
+        if( kConnectionHandleDisplayPortEvent == attribute)
         {
-            case kConnectionFlags: DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s index:%u attribute:kConnectionFlags value:%lu ret:%x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,value!=NULL?*value:0, ret);break;
-            case kConnectionSyncEnable: DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s index:%u attribute:kConnectionSyncEnable value:%lu ret:%x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,value!=NULL?*value:0, ret);break;
-            case kConnectionSyncFlags: DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s index:%u attribute:kConnectionSyncFlags value:%lu ret:%x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,value!=NULL?*value:0, ret);break;
-            case kConnectionSupportsAppleSense: DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s index:%u attribute:kConnectionSupportsAppleSense value:%lu ret:%x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,value!=NULL?*value:0, ret);break;
-            case kConnectionSupportsLLDDCSense: DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s index:%u attribute:kConnectionSupportsLLDDCSense value:%lu ret:%x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,value!=NULL?*value:0, ret);break;
-            case kConnectionSupportsHLDDCSense: DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s index:%u attribute:kConnectionSupportsHLDDCSense value:%lu ret:%x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,value!=NULL?*value:0, ret);break;
-            case kConnectionEnable: DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s index:%u attribute:kConnectionEnable value:%lu ret:%x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,value!=NULL?*value:0, ret);break;
-            case kConnectionCheckEnable: DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s index:%u attribute:kConnectionCheckEnable value:%lu ret:%x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,value!=NULL?*value:0, ret);break;
-            case kConnectionProbe: DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s index:%u attribute:kConnectionProbe value:%lu ret:%x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,value!=NULL?*value:0, ret);break;
-            case kConnectionChanged: DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s index:%u attribute:kConnectionChanged value:%lu ret:%x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,value!=NULL?*value:0, ret);break;
-            case kConnectionPower: DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s index:%u attribute:kConnectionPower value:%lu ret:%x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,value!=NULL?*value:0, ret);break;
-            case kConnectionPostWake: DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s index:%u attribute:kConnectionPostWake value:%lu ret:%x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,value!=NULL?*value:0, ret);break;
-            case kConnectionDisplayParameterCount: DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s index:%u attribute:kConnectionDisplayParameterCount value:%lu ret:%x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,value!=NULL?*value:0, ret);break;
-            case kConnectionDisplayParameters: DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s index:%u attribute:kConnectionDisplayParameters value:%lu ret:%x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,value!=NULL?*value:0, ret);break;
-            case kConnectionOverscan: DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s index:%u attribute:kConnectionOverscan value:%lu ret:%x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,value!=NULL?*value:0, ret);break;
-            case kConnectionVideoBest: DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s index:%u attribute:kConnectionVideoBest value:%lu ret:%x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,value!=NULL?*value:0, ret);break;
-            case kConnectionRedGammaScale: DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s index:%u attribute:kConnectionRedGammaScale value:%lu ret:%x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,value!=NULL?*value:0, ret);break;
-            case kConnectionGreenGammaScale: DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s index:%u attribute:kConnectionGreenGammaScale value:%lu ret:%x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,value!=NULL?*value:0, ret);break;
-            case kConnectionBlueGammaScale: DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s index:%u attribute:kConnectionBlueGammaScale value:%lu ret:%x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,value!=NULL?*value:0, ret);break;
-            case kConnectionGammaScale: DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s index:%u attribute:kConnectionGammaScale value:%lu ret:%x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,value!=NULL?*value:0, ret);break;
-            case kConnectionFlushParameters: DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s index:%u attribute:kConnectionFlushParameters value:%lu ret:%x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,value!=NULL?*value:0, ret);break;
-            case kConnectionVBLMultiplier: DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s index:%u attribute:kConnectionVBLMultiplier value:%lu ret:%x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,value!=NULL?*value:0, ret);break;
-            case kConnectionHandleDisplayPortEvent:
-                
-                DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s index:%u attribute:kConnectionHandleDisplayPortEvent value:%lu ret:%x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,value!=NULL?*value:0, ret);
-                break;
-            case kConnectionPanelTimingDisable: DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s index:%u attribute:kConnectionPanelTimingDisable value:%lu ret:%x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,value!=NULL?*value:0, ret);break;
-            case kConnectionColorMode: DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s index:%u attribute:kConnectionColorMode value:%lu ret:%x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,value!=NULL?*value:0, ret);break;
-            case kConnectionColorModesSupported: DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s index:%u attribute:kConnectionColorModesSupported value:%lu ret:%x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,value!=NULL?*value:0, ret);break;
-            case kConnectionColorDepthsSupported: DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s index:%u attribute:kConnectionColorDepthsSupported value:%lu ret:%x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,value!=NULL?*value:0, ret);break;
-            case kConnectionControllerDepthsSupported: DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s index:%u attribute:kConnectionControllerDepthsSupported value:%lu ret:%x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,value!=NULL?*value:0, ret);break;
-            case kConnectionControllerColorDepth: DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s index:%u attribute:kConnectionControllerColorDepth value:%lu ret:%x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,value!=NULL?*value:0, ret);break;
-            case kConnectionControllerDitherControl: DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s index:%u attribute:kConnectionControllerDitherControl value:%lu ret:%x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,value!=NULL?*value:0, ret);break;
-            case kConnectionDisplayFlags: DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s index:%u attribute:kConnectionDisplayFlags value:%lu ret:%x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,value!=NULL?*value:0, ret);break;
-            case kConnectionEnableAudio: DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s index:%u attribute:kConnectionEnableAudio value:%lu ret:%x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,value!=NULL?*value:0, ret);break;
-            case kConnectionAudioStreaming: DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s index:%u attribute:kConnectionAudioStreaming value:%lu ret:%x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,value!=NULL?*value:0, ret);break;
-            default:
-                
-                DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s ret %x  index:%u attribute:%s value:%lu",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret, connectIndex,(const char*)&attribute,value!=NULL?*value:0);
-                break;
+           
+            DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s index:%u attribute:%s value:%lu ret:%x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,attributeName, value!=NULL?*value:0, ret);
         }
+        else
+        {
+            DBGLOG("ngfx", "NVDA_getAttributeForConnection %s:%s index:%u attribute:%s value:%lu ret:%x",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,attributeName, value!=NULL?*value:0, ret);
+        }
+
 
         return ret;
     }
     return kIOReturnSuccess;
 }
 
+
+bool NGFX::NVDA_start(IONDRVFramebuffer *that,IOService * provider)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_start)
+    {
+        DBGLOG("ngfx", "NVDA_start %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        bool ret = callbackNGFX->org_NVDA_start(that, provider);
+        DBGLOG("ngfx", "NVDA_start %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+void NGFX::NVDA_stop(IONDRVFramebuffer *that,IOService * provider )
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_stop)
+    {
+        DBGLOG("ngfx", "NVDA_stop %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+         callbackNGFX->org_NVDA_stop(that,provider);
+        DBGLOG("ngfx", "NVDA_stop %s:%s ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+    }
+  //  return kIOReturnSuccess;
+}
+IOReturn NGFX::NVDA_glkClose(IONDRVFramebuffer *that,IOService* svc)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_glkClose)
+    {
+        DBGLOG("ngfx", "NVDA_glkClose %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_NVDA_glkClose(that,svc);
+        DBGLOG("ngfx", "NVDA_glkClose %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+IOReturn NGFX::IONDRVFramebuffer_enableController(IONDRVFramebuffer *that)
+{
+    if (callbackNGFX && callbackNGFX->org_IONDRVFramebuffer_enableController)
+    {
+        DBGLOG("ngfx", "IONDRVFramebuffer_enableController %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_IONDRVFramebuffer_enableController(that);
+        DBGLOG("ngfx", "IONDRVFramebuffer_enableController %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+
+
+IOReturn NGFX::NVDA_ScanList(IONDRVFramebuffer *that,IOService* svc)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_ScanList)
+    {
+        DBGLOG("ngfx", "NVDA_ScanList %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_NVDA_ScanList(that,svc);
+        DBGLOG("ngfx", "NVDA_ScanList %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+IOReturn NGFX::NVDA_InsertNode(IONDRVFramebuffer *that,IOService* svc)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_InsertNode)
+    {
+        DBGLOG("ngfx", "NVDA_InsertNode %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_NVDA_InsertNode(that,svc);
+        DBGLOG("ngfx", "NVDA_InsertNode %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+IOReturn NGFX::NVDA_DevTypeDisplay(IONDRVFramebuffer *that,IORegistryEntry* preg)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_DevTypeDisplay)
+    {
+        DBGLOG("ngfx", "NVDA_DevTypeDisplay %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_NVDA_DevTypeDisplay(that,preg);
+        DBGLOG("ngfx", "NVDA_DevTypeDisplay %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+IOReturn NGFX::NVDA_initAppleMux(IONDRVFramebuffer *that,IORegistryEntry* preg)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_initAppleMux)
+    {
+        DBGLOG("ngfx", "NVDA_initAppleMux %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_NVDA_initAppleMux(that,preg);
+        DBGLOG("ngfx", "NVDA_initAppleMux %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+IOReturn NGFX::NVDA_setAppleMux(IONDRVFramebuffer *that,unsigned int p1)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_setAppleMux)
+    {
+        DBGLOG("ngfx", "NVDA_setAppleMux %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_NVDA_setAppleMux(that,p1);
+        DBGLOG("ngfx", "NVDA_setAppleMux %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+IOReturn NGFX::NVDA_rmStart(IONDRVFramebuffer *that,IOService* svc, unsigned int p1)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_rmStart)
+    {
+        DBGLOG("ngfx", "NVDA_rmStart %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_NVDA_rmStart(that,svc,p1);
+        DBGLOG("ngfx", "NVDA_rmStart %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+void NGFX::NVDA_doHotplugInterruptService(OSObject * owner,IOInterruptEventSource * evtSrc, int intCount)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_doHotplugInterruptService)
+    {
+        IOFramebuffer * that = (IOFramebuffer *) owner;
+
+        DBGLOG("ngfx", "NVDA_doHotplugInterruptService %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+         callbackNGFX->org_NVDA_doHotplugInterruptService(owner, evtSrc, intCount);
+        DBGLOG("ngfx", "NVDA_doHotplugInterruptService %s:%s ret ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+    }
+}
+void NGFX::NVDA_doAudioHDCPInterruptService(OSObject * owner,IOInterruptEventSource * evtSrc, int intCount)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_doAudioHDCPInterruptService)
+    {
+           IOFramebuffer * that = (IOFramebuffer *) owner;
+        DBGLOG("ngfx", "NVDA_doAudioHDCPInterruptService %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        callbackNGFX->org_NVDA_doAudioHDCPInterruptService(owner, evtSrc, intCount);
+        DBGLOG("ngfx", "NVDA_doAudioHDCPInterruptService %s:%s ret ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+    }
+}
+void NGFX::NVDA_doHDCPReadyInterruptService(OSObject * owner,IOInterruptEventSource * evtSrc, int intCount)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_doHDCPReadyInterruptService)
+    {
+           IOFramebuffer * that = (IOFramebuffer *) owner;
+        DBGLOG("ngfx", "NVDA_doHDCPReadyInterruptService %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        callbackNGFX->org_NVDA_doHDCPReadyInterruptService(owner, evtSrc, intCount);
+        DBGLOG("ngfx", "NVDA_doHDCPReadyInterruptService %s:%s ret",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+    }
+}
+IOReturn NGFX::NVDA_glkOpen(IONDRVFramebuffer *that,IOService* svc)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_glkOpen)
+    {
+        
+        DBGLOG("ngfx", "NVDA_glkOpen %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_NVDA_glkOpen(that,svc);
+        DBGLOG("ngfx", "NVDA_glkOpen %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+IOReturn NGFX::NVDA_getNVAcceleratorPropertyFromRegistry(IONDRVFramebuffer *that,char const* p1, unsigned int* p2)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_getNVAcceleratorPropertyFromRegistry)
+    {
+        DBGLOG("ngfx", "NVDA_getNVAcceleratorPropertyFromRegistry %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_NVDA_getNVAcceleratorPropertyFromRegistry(that,p1,p2);
+        DBGLOG("ngfx", "NVDA_getNVAcceleratorPropertyFromRegistry %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+IOReturn NGFX::NVDA_callPlatformFunction(IONDRVFramebuffer *that,OSSymbol const* p1, bool p2, void* p3, void* p4, void* p5, void* p6)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_callPlatformFunction)
+    {
+        DBGLOG("ngfx", "NVDA_callPlatformFunction %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_NVDA_callPlatformFunction(that,p1,p2,p3,p4,p5,p6);
+        DBGLOG("ngfx", "NVDA_callPlatformFunction %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+IOReturn NGFX::NVDA_mergeDeviceProperties(IONDRVFramebuffer *that,char const* p1, char const* p2)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_mergeDeviceProperties)
+    {
+        DBGLOG("ngfx", "NVDA_mergeDeviceProperties %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_NVDA_mergeDeviceProperties(that, p1,p2);
+        DBGLOG("ngfx", "NVDA_mergeDeviceProperties %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+IODeviceMemory *  NGFX::NVDA_getApertureRange(IONDRVFramebuffer *that,IOPixelAperture aperture)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_getApertureRange)
+    {
+        DBGLOG("ngfx", "NVDA_getApertureRange %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IODeviceMemory * ret  = callbackNGFX->org_NVDA_getApertureRange(that, aperture);
+        DBGLOG("ngfx", "NVDA_getApertureRange %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver", ret!=NULL?1:0);
+        return ret;
+    }
+    return NULL;
+}
+IOReturn NGFX::NVDA_getInformationForDisplayMode(IONDRVFramebuffer *that,IODisplayModeID displayMode,
+                                                 IODisplayModeInformation * info )
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_getInformationForDisplayMode)
+    {
+        DBGLOG("ngfx", "NVDA_getInformationForDisplayMode %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_NVDA_getInformationForDisplayMode(that,displayMode, info);
+        DBGLOG("ngfx", "NVDA_getInformationForDisplayMode %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+
+const char * getControllerAttriuteName(IOSelect attribute, char *sztmp)
+{
+    
+    switch (attribute) {
+        case kIOPowerStateAttribute: return "kIOPowerStateAttribute";
+        case kIOPowerAttribute: return "kIOPowerAttribute";
+        case kIODriverPowerAttribute: return "kIODriverPowerAttribute";
+        case kIOHardwareCursorAttribute: return "kIOHardwareCursorAttribute";
+        case kIOMirrorAttribute: return "kIOMirrorAttribute";
+        case kIOMirrorDefaultAttribute: return "kIOMirrorDefaultAttribute";
+        case kIOCapturedAttribute: return "kIOCapturedAttribute";
+        case kIOCursorControlAttribute: return "kIOCursorControlAttribute";
+        case kIOSystemPowerAttribute: return "kIOSystemPowerAttribute";
+        case kIOWindowServerActiveAttribute: return "kIOWindowServerActiveAttribute";
+        case kIOVRAMSaveAttribute: return "kIOVRAMSaveAttribute";
+        case kIODeferCLUTSetAttribute: return "kIODeferCLUTSetAttribute";
+        case kIOClamshellStateAttribute: return "kIOClamshellStateAttribute";
+        case kIOFBDisplayPortTrainingAttribute: return "kIOFBDisplayPortTrainingAttribute";
+        case kIOFBDisplayState: return "kIOFBDisplayState";
+        case kIOFBVariableRefreshRate: return "kIOFBVariableRefreshRate";
+        case kIOFBLimitHDCPAttribute: return "kIOFBLimitHDCPAttribute";
+        case kIOFBLimitHDCPStateAttribute: return "kIOFBLimitHDCPStateAttribute";
+        case kIOFBStop: return "kIOFBStop";
+        case kIOFBRedGammaScaleAttribute: return "kIOFBRedGammaScaleAttribute";
+        case kIOFBGreenGammaScaleAttribute: return "kIOFBGreenGammaScaleAttribute";
+        case kIOFBBlueGammaScaleAttribute: return "kIOFBBlueGammaScaleAttribute";
+        default:
+            sztmp[0] = attribute >>24 & 0xff;
+            sztmp[1] = attribute >>16 & 0xff;
+            sztmp[2] = attribute >>8 & 0xff;
+            sztmp[3] = attribute & 0xff;
+            sztmp[4] = 0;
+            snprintf(sztmp+4, 20, "(%X)",attribute);
+            return sztmp;
+    }
+    
+    return "unknown";
+}
+IOReturn NGFX::NVDA_setAttribute(IONDRVFramebuffer *that,IOSelect attribute, uintptr_t value)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_setAttribute)
+    {
+        char sztmp[30];
+        const char *szAttributeName = getControllerAttriuteName(attribute, sztmp);
+        
+        switch (attribute) {
+            case kIOPowerStateAttribute:
+                
+                DBGLOG("ngfx", "NVDA_setAttribute %s:%s %s value: %u begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",szAttributeName, static_cast<unsigned int >(value));
+            break;
+                
+            default:
+                  DBGLOG("ngfx", "NVDA_setAttribute %s:%s %s value %lu begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",szAttributeName,value);
+                break;
+        }
+        IOReturn ret = callbackNGFX->org_NVDA_setAttribute(that,attribute,value);
+        DBGLOG("ngfx", "NVDA_setAttribute %s:%s  %s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",szAttributeName,ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+IOReturn NGFX::NVDA_getAttribute(IONDRVFramebuffer *that,IOSelect attribute, uintptr_t * value )
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_getAttribute)
+    {
+        char sztmp[30];
+        const char *szAttributeName = getControllerAttriuteName(attribute, sztmp);
+        DBGLOG("ngfx", "NVDA_getAttribute %s:%s %s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",szAttributeName);
+        IOReturn ret = callbackNGFX->org_NVDA_getAttribute(that,attribute,value);
+        DBGLOG("ngfx", "NVDA_getAttribute %s:%s %s ret %x value %lu ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",szAttributeName,ret, value!=NULL?*value:0);
+        
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+void NGFX::NVDA_doVBLInterrupt(IONDRVFramebuffer *that)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_doVBLInterrupt)
+    {
+        DBGLOG("ngfx", "NVDA_doVBLInterrupt %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+       // IOReturn ret =
+        callbackNGFX->org_NVDA_doVBLInterrupt(that);
+        DBGLOG("ngfx", "NVDA_doVBLInterrupt %s:%s ret ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+  //      return ret;
+    }
+//    return kIOReturnSuccess;
+}
+void NGFX::NVDA_doHotPlugInterrupt(IONDRVFramebuffer *that)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_doHotPlugInterrupt)
+    {
+        DBGLOG("ngfx", "NVDA_doHotPlugInterrupt %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        callbackNGFX->org_NVDA_doHotPlugInterrupt(that);
+        DBGLOG("ngfx", "NVDA_doHotPlugInterrupt %s:%s ret ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+       // return ret;
+    }
+ //   return kIOReturnSuccess;
+}
+IOReturn NGFX::NVDA_doGlkWindowServerTransitionNotify(IONDRVFramebuffer *that,unsigned int p1, unsigned int p2, unsigned int* p3, unsigned int p4)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_doGlkWindowServerTransitionNotify)
+    {
+        DBGLOG("ngfx", "NVDA_doGlkWindowServerTransitionNotify %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_NVDA_doGlkWindowServerTransitionNotify(that,p1,p2,p3,p4);
+        DBGLOG("ngfx", "NVDA_doGlkWindowServerTransitionNotify %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+IOReturn NGFX::NVDA_setGammaTable(IONDRVFramebuffer *that,unsigned int p1, unsigned int p2, unsigned int p3, void* p4)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_setGammaTable)
+    {
+        DBGLOG("ngfx", "NVDA_setGammaTable %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_NVDA_setGammaTable(that,p1,p2,p3,p4);
+        DBGLOG("ngfx", "NVDA_setGammaTable %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+IOReturn NGFX::NVDA_setCLUTWithEntries(IONDRVFramebuffer *that,IOColorEntry* p1, unsigned int p2, unsigned int p3, unsigned int p4)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_setCLUTWithEntries)
+    {
+        DBGLOG("ngfx", "NVDA_setCLUTWithEntries %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_NVDA_setCLUTWithEntries(that,p1,p2,p3,p4);
+        DBGLOG("ngfx", "NVDA_setCLUTWithEntries %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+IOReturn NGFX::NVDA_undefinedSymbolHandler(IONDRVFramebuffer *that,char const* p1, char const* p2)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_undefinedSymbolHandler)
+    {
+        DBGLOG("ngfx", "NVDA_undefinedSymbolHandler %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_NVDA_undefinedSymbolHandler(that,p1,p2);
+        DBGLOG("ngfx", "NVDA_undefinedSymbolHandler %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+IOService * NGFX::NVDA_probe(IONDRVFramebuffer *that,IOService * provider, SInt32 * score)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_probe)
+    {
+        DBGLOG("ngfx", "NVDA_probe %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOService * ret = callbackNGFX->org_NVDA_probe(that,provider,score);
+        DBGLOG("ngfx", "NVDA_probe %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret!=NULL?1:0);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+IOReturn NGFX::NVDA_newUserClient(IONDRVFramebuffer *that,task_t          owningTask,void *          security_id,UInt32          type, IOUserClient ** clientH)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_newUserClient)
+    {
+        DBGLOG("ngfx", "NVDA_newUserClient %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_NVDA_newUserClient(that,owningTask,security_id, type, clientH);
+        DBGLOG("ngfx", "NVDA_newUserClient %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+IOReturn NGFX::NVDA_copyACPIDevice(IONDRVFramebuffer *that,IORegistryEntry* p1)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_copyACPIDevice)
+    {
+        DBGLOG("ngfx", "NVDA_copyACPIDevice %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_NVDA_copyACPIDevice(that,p1);
+        DBGLOG("ngfx", "NVDA_copyACPIDevice %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+IOReturn NGFX::NVDA_findAppleMuxSubdevice(IONDRVFramebuffer *that,IORegistryEntry* p1, unsigned int p2)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_findAppleMuxSubdevice)
+    {
+        DBGLOG("ngfx", "NVDA_findAppleMuxSubdevice %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_NVDA_findAppleMuxSubdevice(that,p1,p2);
+        DBGLOG("ngfx", "NVDA_findAppleMuxSubdevice %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+IOReturn NGFX::NVDA_setAppleMuxSubdevice(IONDRVFramebuffer *that,IOACPIPlatformDevice* p1, unsigned int p2)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_setAppleMuxSubdevice)
+    {
+        DBGLOG("ngfx", "NVDA_setAppleMuxSubdevice %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_NVDA_setAppleMuxSubdevice(that,p1,p2);
+        DBGLOG("ngfx", "NVDA_setAppleMuxSubdevice %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+IOReturn NGFX::NVDA_getAppleMux(IONDRVFramebuffer *that)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_getAppleMux)
+    {
+        DBGLOG("ngfx", "NVDA_getAppleMux %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_NVDA_getAppleMux(that);
+        DBGLOG("ngfx", "NVDA_getAppleMux %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+bool NGFX::NVDA_setProperty(IONDRVFramebuffer *that,const OSSymbol * aKey, OSObject * anObject)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_setProperty)
+    {
+        DBGLOG("ngfx", "NVDA_setProperty %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        bool ret = callbackNGFX->org_NVDA_setProperty(that,aKey,anObject);
+        DBGLOG("ngfx", "NVDA_setProperty %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+IOReturn NGFX::NVDA_addIntrReg(IONDRVFramebuffer *that,unsigned int p1, void* p2)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_addIntrReg)
+    {
+        DBGLOG("ngfx", "NVDA_addIntrReg %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_NVDA_addIntrReg(that,p1,p2);
+        DBGLOG("ngfx", "NVDA_addIntrReg %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+IOReturn NGFX::NVDA_removeIntrReg(IONDRVFramebuffer *that,void* p1)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_removeIntrReg)
+    {
+        DBGLOG("ngfx", "NVDA_removeIntrReg %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_NVDA_removeIntrReg(that,p1);
+        DBGLOG("ngfx", "NVDA_removeIntrReg %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+IOReturn NGFX::NVDA_findIntrReg(IONDRVFramebuffer *that,void* p1)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_findIntrReg)
+    {
+        DBGLOG("ngfx", "NVDA_findIntrReg %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_NVDA_findIntrReg(that,p1);
+        DBGLOG("ngfx", "NVDA_findIntrReg %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+IOReturn NGFX::NVDA_registerForInterruptType(IONDRVFramebuffer *that,IOSelect interruptType,IOFBInterruptProc proc, OSObject * target, void * ref,void ** interruptRef)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_registerForInterruptType)
+    {
+        DBGLOG("ngfx", "NVDA_registerForInterruptType %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_NVDA_registerForInterruptType(that,interruptType,proc,target,ref,interruptRef);
+        DBGLOG("ngfx", "NVDA_registerForInterruptType %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+IOReturn NGFX::NVDA_unregisterInterrupt(IONDRVFramebuffer *that,void* interruptRef)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_unregisterInterrupt)
+    {
+        DBGLOG("ngfx", "NVDA_unregisterInterrupt %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_NVDA_unregisterInterrupt(that,interruptRef);
+        DBGLOG("ngfx", "NVDA_unregisterInterrupt %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+IOReturn NGFX::NVDA_setInterruptState(IONDRVFramebuffer *that,void * interruptRef, UInt32 state)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_setInterruptState)
+    {
+        DBGLOG("ngfx", "NVDA_setInterruptState %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_NVDA_setInterruptState(that,interruptRef, state);
+        DBGLOG("ngfx", "NVDA_setInterruptState %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+
+
+IOReturn NGFX::NVDA_message(IONDRVFramebuffer *that,UInt32 type, IOService *provider, void *argument)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_message)
+    {
+        DBGLOG("ngfx", "NVDA_message %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_NVDA_message(that,type,provider,argument);
+        DBGLOG("ngfx", "NVDA_message %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+IOReturn NGFX::NVDA_createNVDCNub(IONDRVFramebuffer *that,unsigned int p1)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_createNVDCNub)
+    {
+        DBGLOG("ngfx", "NVDA_createNVDCNub %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_NVDA_createNVDCNub(that,p1);
+        DBGLOG("ngfx", "NVDA_createNVDCNub %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+IOReturn NGFX::NVDA_get10BPCFormatGLKSupport(IONDRVFramebuffer *that,unsigned char* p1)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_get10BPCFormatGLKSupport)
+    {
+        DBGLOG("ngfx", "NVDA_get10BPCFormatGLKSupport %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_NVDA_get10BPCFormatGLKSupport(that,p1);
+        DBGLOG("ngfx", "NVDA_get10BPCFormatGLKSupport %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+IOReturn NGFX::NVDA_getIOPCIDeviceFromDeviceInstance(IONDRVFramebuffer *that,unsigned int p1, IOPCIDevice** lppdevice)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_getIOPCIDeviceFromDeviceInstance)
+    {
+        DBGLOG("ngfx", "NVDA_getIOPCIDeviceFromDeviceInstance %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_NVDA_getIOPCIDeviceFromDeviceInstance(that,p1,lppdevice);
+        DBGLOG("ngfx", "NVDA_getIOPCIDeviceFromDeviceInstance %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+IOReturn NGFX::NVDA_getIOPCIDevicePropertyFromRegistry(IONDRVFramebuffer *that,char const* p1, unsigned short* p2)
+{
+    if (callbackNGFX && callbackNGFX->org_NVDA_getIOPCIDevicePropertyFromRegistry)
+    {
+        DBGLOG("ngfx", "NVDA_getIOPCIDevicePropertyFromRegistry %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_NVDA_getIOPCIDevicePropertyFromRegistry(that,p1,p2);
+        DBGLOG("ngfx", "NVDA_getIOPCIDevicePropertyFromRegistry %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+IOReturn NGFX::IOFramebuffer_doSetup(IONDRVFramebuffer *that,bool bfull)
+{
+    if (callbackNGFX && callbackNGFX->org_IOFramebuffer_doSetup)
+    {
+        DBGLOG("ngfx", "IOFramebuffer_doSetup %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_IOFramebuffer_doSetup(that,bfull);
+        DBGLOG("ngfx", "IOFramebuffer_doSetup %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+IOReturn NGFX::IONDRVFramebuffer_processConnectChange(IONDRVFramebuffer *that,uintptr_t * value)
+{
+    if (callbackNGFX && callbackNGFX->org_IONDRVFramebuffer_processConnectChange)
+    {
+        DBGLOG("ngfx", "IONDRVFramebuffer_processConnectChange %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_IONDRVFramebuffer_processConnectChange(that,value);
+        DBGLOG("ngfx", "IONDRVFramebuffer_processConnectChange %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+
+const char * getIOOptionBitsStr(IOOptionBits state,char * sztmp)
+{
+    if(state==0)
+        return "none";
+    
+    int offset = 0;
+    if ( state & 0x00000001) snprintf(sztmp+offset, 255-offset, "|kIOFBDidWork");
+    if ( state & 0x00000002) snprintf(sztmp+offset, 255-offset, "|kIOFBWorking");
+    if ( state & 0x00000004) snprintf(sztmp+offset, 255-offset, "|kIOFBPaging");
+    if ( state & 0x00000008) snprintf(sztmp+offset, 255-offset, "|kIOFBWsWait");
+    if ( state & 0x00000010) snprintf(sztmp+offset, 255-offset, "|kIOFBDimmed");
+    if ( state & 0x00000020) snprintf(sztmp+offset, 255-offset, "|kIOFBServerSlept");
+    if ( state & 0x00000040) snprintf(sztmp+offset, 255-offset, "|kIOFBServerUp");
+    if ( state & 0x00000080) snprintf(sztmp+offset, 255-offset, "|kIOFBServerDown");
+    if ( state & 0x00000100) snprintf(sztmp+offset, 255-offset, "|kIOFBCaptured");
+    if ( state & 0x00000200) snprintf(sztmp+offset, 255-offset, "|kIOFBDimDisable");
+    if ( state & 0x00001000) snprintf(sztmp+offset, 255-offset, "|kIOFBDisplaysChanging");
+    return sztmp;
+}
+
+IOOptionBits NGFX::IOFramebuffer_checkPowerWork(IONDRVFramebuffer *that,IOOptionBits state)
+{
+    if (callbackNGFX && callbackNGFX->org_IOFramebuffer_checkPowerWork)
+    {
+        char szbitoptionstr[255];
+        const char *szOption = getIOOptionBitsStr(state,szbitoptionstr);
+        DBGLOG("ngfx", "IOFramebuffer_checkPowerWork %s:%s option:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",szOption);
+        IOOptionBits ret = callbackNGFX->org_IOFramebuffer_checkPowerWork(that,state);
+        szOption = getIOOptionBitsStr(ret,szbitoptionstr);
+        DBGLOG("ngfx", "IOFramebuffer_checkPowerWork %s:%s ret %x option:%s ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret,szOption);
+        return ret;
+    }
+    return 0;
+}
+
+
+
+void NGFX::IOFramebuffer_dpProcessInterrupt(IONDRVFramebuffer *that)
+{
+    if (callbackNGFX && callbackNGFX->org_IOFramebuffer_dpProcessInterrupt)
+    {
+        DBGLOG("ngfx", "IOFramebuffer_dpProcessInterrupt %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+         callbackNGFX->org_IOFramebuffer_dpProcessInterrupt(that);
+        DBGLOG("ngfx", "IOFramebuffer_dpProcessInterrupt %s:%s ret ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+    }
+}
+
+
+
+IOReturn NGFX::IOFramebuffer_open(IONDRVFramebuffer *that)
+{
+    if (callbackNGFX && callbackNGFX->org_IOFramebuffer_open)
+    {
+        DBGLOG("ngfx", "IOFramebuffer_open %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_IOFramebuffer_open(that);
+        DBGLOG("ngfx", "IOFramebuffer_open %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
 
