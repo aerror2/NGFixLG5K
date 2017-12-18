@@ -412,6 +412,13 @@ private:
 	};
     int progressState {ProcessingState::NothingReady};
     
+   
+     int displayOnlineStates[6];
+    
+    void setDisplayOnline(const char *szDisplayName, int isOnline);
+    int  getDisplayOnline(const char *szDisplayName);
+    void clearDisplayOnline(const char *szDisplayName);
+    
     static constexpr const char* kNvidiaTeamId { "6KR3T733EC" };
 };
 

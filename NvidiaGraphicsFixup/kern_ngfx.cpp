@@ -50,6 +50,9 @@ static NGFX *callbackNGFX = nullptr;
 
 
 bool NGFX::init() {
+
+    bzero(displayOnlineStates, sizeof(displayOnlineStates));
+    
 	if (getKernelVersion() > KernelVersion::Mavericks)
 	{
 		LiluAPI::Error error = lilu.onPatcherLoad(
@@ -1707,6 +1710,72 @@ const char * getControllerAttriuteName(IOSelect attribute, char *sztmp)
     
     return "unknown";
 }
+
+int bitoffsetByDisplayName(const char *szDisplayName)
+{
+    if(strcmp(szDisplayName,"NVDA,Display-A")==0)
+    {
+        return 0;
+    }
+    else if(strcmp(szDisplayName,"NVDA,Display-B")==0)
+    {
+        return 1;
+    }
+    else if(strcmp(szDisplayName,"NVDA,Display-C")==0)
+    {
+        return 2;
+    }
+    else if(strcmp(szDisplayName,"NVDA,Display-D")==0)
+    {
+        return 3;
+    }
+    else if(strcmp(szDisplayName,"NVDA,Display-E")==0)
+    {
+        return 4;
+    }
+    else if(strcmp(szDisplayName,"NVDA,Display-F")==0)
+    {
+        return 5;
+    }
+    else if(strcmp(szDisplayName,"NVDA,Display-G")==0)
+    {
+        return 6;
+    }
+    
+    return -1;
+}
+
+void NGFX::setDisplayOnline(const char *szDisplayName, int state)
+{
+    int setOffset = bitoffsetByDisplayName(szDisplayName);
+    if(setOffset<0)
+        return ;
+    
+    displayOnlineStates[setOffset] = state;
+  
+}
+
+
+int NGFX::getDisplayOnline(const char *szDisplayName)
+{
+    int setOffset = bitoffsetByDisplayName(szDisplayName);
+    if(setOffset<0)
+        return false;
+    
+    return displayOnlineStates[setOffset];
+}
+
+void NGFX::clearDisplayOnline(const char *szDisplayName)
+{
+    int setOffset = bitoffsetByDisplayName(szDisplayName);
+    if(setOffset<0)
+        return ;
+    displayOnlineStates[setOffset] = 0;
+
+}
+
+
+
 IOReturn NGFX::NVDA_setAttribute(IONDRVFramebuffer *that,IOSelect attribute, uintptr_t value)
 {
     if (callbackNGFX && callbackNGFX->org_NVDA_setAttribute)
@@ -1716,10 +1785,16 @@ IOReturn NGFX::NVDA_setAttribute(IONDRVFramebuffer *that,IOSelect attribute, uin
         
         switch (attribute) {
             case kIOPowerStateAttribute:
+               if(that->getProvider()!=NULL)
+               {
+                    if(value==1 || value==2)
+                        callbackNGFX->setDisplayOnline(that->getProvider()->getName(), (int)value);
+                   
+               }
                 
                 DBGLOG("ngfx", "NVDA_setAttribute %s:%s %s value: %u begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",szAttributeName, static_cast<unsigned int >(value));
             break;
-                
+         
             default:
                   DBGLOG("ngfx", "NVDA_setAttribute %s:%s %s value %lu begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",szAttributeName,value);
                 break;
@@ -1737,6 +1812,60 @@ IOReturn NGFX::NVDA_getAttribute(IONDRVFramebuffer *that,IOSelect attribute, uin
         char sztmp[30];
         const char *szAttributeName = getControllerAttriuteName(attribute, sztmp);
         DBGLOG("ngfx", "NVDA_getAttribute %s:%s %s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",szAttributeName);
+        switch (attribute) {
+            case kIOFBDisplayState:
+                if(that->getProvider()!=NULL && value!=NULL)
+                {
+                    int val  = callbackNGFX->getDisplayOnline(that->getProvider()->getName());
+                    
+//                    if(val==1)
+//                    {
+//                        *value = kIOFBDisplayState_PipelineBlack;
+//                         DBGLOG("ngfx", "NVDA_getAttribute %s:%s %s ret kIOFBDisplayState_PipelineBlack value %lu ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",szAttributeName, value!=NULL?*value:0);
+//                        return kIOReturnSuccess;
+//                    }
+//                    else
+                    if(val==2)
+                    {
+                       // *value = kIOFBDisplayState_AlreadyActive;
+                      
+                        uintptr_t konline = 0;
+                        that->getAttributeForConnection(0, kConnectionCheckEnable, &konline);
+    
+                        
+                          DBGLOG("ngfx", "NVDA_getAttribute %s:%s %s   value %lu online %lu",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",szAttributeName, value!=NULL?*value:0,konline);
+                        
+                        if(konline!=0)
+                        {
+                            //uintptr_t evt=kIODPEventStart;
+//                            const char *eventname =getDisplayPortEventName(evt);
+//
+//                            DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:%s value:%s",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,attributeName, eventname);
+//
+//                            if(evt == kIODPEventIdle)
+//                            {
+//
+                           // that->dpProcessInterrupt();
+//                            that->setAttributeForConnection(0, kConnectionHandleDisplayPortEvent, uintptr_t(&evt));
+                            if(strcmp(that->getProvider()->getName(),"NVDA,Display-A")==0 || (strcmp(that->getProvider()->getName(),"NVDA,Display-B")==0)
+                               || strcmp(that->getProvider()->getName(),"NVDA,Display-C")==0)
+                            {
+                                IOSleep(10000);
+                            }
+                            
+                            *value = kIOFBDisplayState_AlreadyActive;
+                           return kIOReturnSuccess;
+                        }
+                        
+                    
+                    }
+                    callbackNGFX->clearDisplayOnline(that->getProvider()->getName());
+                }
+                break;
+            default:
+                break;
+        }
+        
         IOReturn ret = callbackNGFX->org_NVDA_getAttribute(that,attribute,value);
         DBGLOG("ngfx", "NVDA_getAttribute %s:%s %s ret %x value %lu ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",szAttributeName,ret, value!=NULL?*value:0);
         
