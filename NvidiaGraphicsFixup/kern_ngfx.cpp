@@ -775,85 +775,72 @@ void NGFX::processKext(KernelPatcher &patcher, size_t index, mach_vm_address_t a
                         SYSLOG("ngfx", "failed to resolve __ZN13IOFramebuffer4openEv");
                     }
                     
-//                    auto method_address = patcher.solveSymbol(index, "__ZN13IOFramebuffer24extSetStartupDisplayModeEP8OSObjectPvP25IOExternalMethodArguments");
-//                    if (method_address) {
-//                        DBGLOG("ngfx", "obtained __ZN13IOFramebuffer24extSetStartupDisplayModeEP8OSObjectPvP25IOExternalMethodArguments");
-//                        patcher.clearError();
-//                        orgExtSetStartupDisplayMode = reinterpret_cast<t_extSetStartupDisplayMode>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(extSetStartupDisplayModePatch), true));
-//
-//                    }
-//                    else
-//                    {
-//                        SYSLOG("ngfx", "failed to resolve __ZN13IOFramebuffer24extSetStartupDisplayModeEP8OSObjectPvP25IOExternalMethodArguments");
-//
-//                    }
-//
                     
-                    //  __ZN13IOFramebuffer16extSetPropertiesEP12OSDictionary:        // IOFramebuffer::extSetProperties(OSDictionary*)
-                   // using t_extSetProperties = IOReturn (*) (IOFramebuffer * that, OSDictionary * dict );
+                    method_address = patcher.solveSymbol(index, "__ZN13IOFramebuffer20processConnectChangeEj");
+                    if (method_address) {
+                        DBGLOG("ngfx", "obtained __ZN13IOFramebuffer20processConnectChangeEj");
+                        patcher.clearError();
+                        org_IOFramebuffer_processConnectChange = reinterpret_cast<t_IOFramebuffer_processConnectChange>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(IOFramebuffer_processConnectChange), true));
+                    }
+                    else
+                    {
+                        SYSLOG("ngfx", "failed to resolve __ZN13IOFramebuffer20processConnectChangeEj");
+                    }
                     
-//                    method_address = patcher.solveSymbol(index, "__ZN13IOFramebuffer16extSetPropertiesEP12OSDictionary");
-//                    if (method_address) {
-//                        DBGLOG("ngfx", "obtained __ZN13IOFramebuffer16extSetPropertiesEP12OSDictionary");
-//                        patcher.clearError();
-//                        org_extSetProperties = reinterpret_cast<t_extSetProperties>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(extSetProperties), true));
-//                    }
-//                    else
-//                    {
-//                        SYSLOG("ngfx", "failed to resolve __ZN13IOFramebuffer16extSetPropertiesEP12OSDictionary");
-//                    }
+                    method_address = patcher.solveSymbol(index, "__ZN13IOFramebuffer16extSetPropertiesEP12OSDictionary");
+                    if (method_address) {
+                        DBGLOG("ngfx", "obtained __ZN13IOFramebuffer16extSetPropertiesEP12OSDictionary");
+                        patcher.clearError();
+                        org_IOFramebuffer_extSetProperties = reinterpret_cast<t_IOFramebuffer_extSetProperties>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(IOFramebuffer_extSetProperties), true));
+                    }
+                    else
+                    {
+                        SYSLOG("ngfx", "failed to resolve __ZN13IOFramebuffer16extSetPropertiesEP12OSDictionary");
+                    }
                     
+                    method_address = patcher.solveSymbol(index, "__ZN13IOFramebuffer24extSetStartupDisplayModeEP8OSObjectPvP25IOExternalMethodArguments");
+                    if (method_address) {
+                        DBGLOG("ngfx", "obtained __ZN13IOFramebuffer24extSetStartupDisplayModeEP8OSObjectPvP25IOExternalMethodArguments");
+                        patcher.clearError();
+                        org_IOFramebuffer_extSetStartupDisplayMode = reinterpret_cast<t_IOFramebuffer_extSetStartupDisplayMode>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(IOFramebuffer_extSetStartupDisplayMode), true));
+                    }
+                    else
+                    {
+                        SYSLOG("ngfx", "failed to resolve __ZN13IOFramebuffer24extSetStartupDisplayModeEP8OSObjectPvP25IOExternalMethodArguments");
+                    }
                     
-                    // __ZN13IOFramebuffer16matchFramebufferEv:        // IOFramebuffer::matchFramebuffer()
-                    //using t_matchFramebuffer = IOReturn (*) (IOFramebuffer * that);
-//                    method_address = patcher.solveSymbol(index, "__ZN13IOFramebuffer16matchFramebufferEv");
-//                    if (method_address) {
-//                        DBGLOG("ngfx", "obtained __ZN13IOFramebuffer16matchFramebufferEv");
-//                        patcher.clearError();
-//                        org_matchFramebuffer = reinterpret_cast<t_matchFramebuffer>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(matchFramebuffer), true));
-//                    }
-//                    else
-//                    {
-//                        SYSLOG("ngfx", "failed to resolve __ZN13IOFramebuffer16matchFramebufferEv");
-//                    }
-                    
-            
-                    
-                    
-                    //    IOReturn IOFramebuffer::extGetInformationForDisplayMode(
-                    //                                                            OSObject * target, void * reference, IOExternalMethodArguments * args)
-                    //__ZN13IOFramebuffer31extGetInformationForDisplayModeEP8OSObjectPvP25IOExternalMethodArguments:        // IOFramebuffer::extGetInformationForDisplayMode(OSObject*, void*, IOExternalMethodArguments*)
-                    
-//                    using t_extGetInformationForDisplayMode = IOReturn (*)(  OSObject * target, void * reference, IOExternalMethodArguments * args );
-//                    t_extGetInformationForDisplayMode  org_extGetInformationForDisplayMode{nullptr};
-                    
-//                    method_address = patcher.solveSymbol(index, "__ZN13IOFramebuffer31extGetInformationForDisplayModeEP8OSObjectPvP25IOExternalMethodArguments");
-//                    if (method_address) {
-//                        DBGLOG("ngfx", "obtained __ZN13IOFramebuffer31extGetInformationForDisplayModeEP8OSObjectPvP25IOExternalMethodArguments");
-//                        patcher.clearError();
-//                        org_extGetInformationForDisplayMode = reinterpret_cast<t_extGetInformationForDisplayMode>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(extGetInformationForDisplayMode), true));
-//                    }
-//                    else
-//                    {
-//                        SYSLOG("ngfx", "failed to resolve __ZN13IOFramebuffer31extGetInformationForDisplayModeEP8OSObjectPvP25IOExternalMethodArguments");
-//                    }
-//
+                    method_address = patcher.solveSymbol(index, "__ZN13IOFramebuffer8postWakeEv");
+                    if (method_address) {
+                        DBGLOG("ngfx", "obtained __ZN13IOFramebuffer8postWakeEv");
+                        patcher.clearError();
+                        org_IOFramebuffer_postWake = reinterpret_cast<t_IOFramebuffer_postWake>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(IOFramebuffer_postWake), true));
+                    }
+                    else
+                    {
+                        SYSLOG("ngfx", "failed to resolve __ZN13IOFramebuffer8postWakeEv");
+                    }
      
-                    
-                    //     __ZN13IOFramebuffer7doSetupEb:        // IOFramebuffer::doSetup(bool)
-                  //  using t_doSetup = IOReturn (*)( IONDRVFramebuffer *that,  bool full);
+                    method_address = patcher.solveSymbol(index, "__ZN13IOFramebuffer10systemWorkEP8OSObjectP22IOInterruptEventSourcei");
+                    if (method_address) {
+                        DBGLOG("ngfx", "obtained __ZN13IOFramebuffer10systemWorkEP8OSObjectP22IOInterruptEventSourcei");
+                        patcher.clearError();
+                        org_IOFramebuffer_systemWork = reinterpret_cast<t_IOFramebuffer_systemWork>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(IOFramebuffer_systemWork), true));
+                    }
+                    else
+                    {
+                        SYSLOG("ngfx", "failed to resolve __ZN13IOFramebuffer10systemWorkEP8OSObjectP22IOInterruptEventSourcei");
+                    }
 
-//                    method_address = patcher.solveSymbol(index, "__ZN13IOFramebuffer7doSetupEb");
-//                    if (method_address) {
-//                        DBGLOG("ngfx", "obtained __ZN13IOFramebuffer7doSetupEb");
-//                        patcher.clearError();
-//                        org_doSetup = reinterpret_cast<t_doSetup>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(doSetup), true));
-//                    }
-//                    else
-//                    {
-//                        SYSLOG("ngfx", "failed to resolve __ZN13IOFramebuffer7doSetupEb");
-//                    }
-                    
+                    method_address = patcher.solveSymbol(index, "__ZN13IOFramebuffer12updateOnlineEv");
+                    if (method_address) {
+                        DBGLOG("ngfx", "obtained __ZN13IOFramebuffer12updateOnlineEv");
+                        patcher.clearError();
+                        org_IOFramebuffer_updateOnline = reinterpret_cast<t_IOFramebuffer_updateOnline>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(IOFramebuffer_updateOnline), true));
+                    }
+                    else
+                    {
+                        SYSLOG("ngfx", "failed to resolve __ZN13IOFramebuffer12updateOnlineEv");
+                    }
                     
                     
                     progressState |= ProcessingState::NVDAIOGraphicsRouted;
@@ -885,6 +872,17 @@ void NGFX::processKext(KernelPatcher &patcher, size_t index, mach_vm_address_t a
                     {
                         SYSLOG("ngfx", "failed to resolve __ZN17IONDRVFramebuffer21setStartupDisplayModeEii");
                         
+                    }
+                    
+                    method_address = patcher.solveSymbol(index, "__ZN17IONDRVFramebuffer14setDisplayModeEii");
+                    if (method_address) {
+                        DBGLOG("ngfx", "obtained __ZN17IONDRVFramebuffer14setDisplayModeEii");
+                        patcher.clearError();
+                        org_IONDRVFramebuffer_setDisplayMode = reinterpret_cast<t_IONDRVFramebuffer_setDisplayMode>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(IONDRVFramebuffer_setDisplayMode), true));
+                    }
+                    else
+                    {
+                        SYSLOG("ngfx", "failed to resolve __ZN17IONDRVFramebuffer14setDisplayModeEii");
                     }
                     
                     
@@ -941,20 +939,6 @@ void NGFX::processKext(KernelPatcher &patcher, size_t index, mach_vm_address_t a
 //                    }
 //
                     
-                    // __ZN17IONDRVFramebuffer14setDisplayModeEii:        // IONDRVFramebuffer::setDisplayMode(int, int)
-                    
-//                    method_address = patcher.solveSymbol(index, "__ZN17IONDRVFramebuffer14setDisplayModeEii");
-//                    if (method_address) {
-//                        DBGLOG("ngfx", "obtained __ZN17IONDRVFramebuffer14setDisplayModeEii");
-//                        patcher.clearError();
-//                        org_setDisplayMode = reinterpret_cast<t_setDisplayMode>(patcher.routeFunction(method_address,
-//                                                                                                              reinterpret_cast<mach_vm_address_t>(setDisplayMode), true));
-//                    }
-//                    else
-//                    {
-//                        SYSLOG("ngfx", "failed to resolve __ZN17IONDRVFramebuffer14setDisplayModeEii");
-//
-//                    }
                     
                     //    __ZN17IONDRVFramebuffer20processConnectChangeEPm:        // IONDRVFramebuffer::processConnectChange(unsigned long*)
                     //using t_processConnectChange= IOReturn (*)(IONDRVFramebuffer *that, uintptr_t * value );
@@ -1847,14 +1831,13 @@ IOReturn NGFX::NVDA_getAttribute(IONDRVFramebuffer *that,IOSelect attribute, uin
 //
                            // that->dpProcessInterrupt();
 //                            that->setAttributeForConnection(0, kConnectionHandleDisplayPortEvent, uintptr_t(&evt));
-                            if(strcmp(that->getProvider()->getName(),"NVDA,Display-A")==0 || (strcmp(that->getProvider()->getName(),"NVDA,Display-B")==0)
-                               || strcmp(that->getProvider()->getName(),"NVDA,Display-C")==0)
-                            {
-                                IOSleep(10000);
-                            }
-                            
-                            *value = kIOFBDisplayState_AlreadyActive;
-                           return kIOReturnSuccess;
+//                            if(strcmp(that->getProvider()->getName(),"NVDA,Display-B")==0 )
+//                            {
+//                                IOSleep(10000);
+//                            }
+//
+//                            *value = kIOFBDisplayState_AlreadyActive;
+//                           return kIOReturnSuccess;
                         }
                         
                     
@@ -2219,6 +2202,98 @@ IOReturn NGFX::IOFramebuffer_open(IONDRVFramebuffer *that)
         DBGLOG("ngfx", "IOFramebuffer_open %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
         IOReturn ret = callbackNGFX->org_IOFramebuffer_open(that);
         DBGLOG("ngfx", "IOFramebuffer_open %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+
+IOReturn NGFX::IOFramebuffer_extSetProperties(IONDRVFramebuffer *that,OSDictionary* dic)
+{
+    if (callbackNGFX && callbackNGFX->org_IOFramebuffer_extSetProperties)
+    {
+        DBGLOG("ngfx", "IOFramebuffer_extSetProperties %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_IOFramebuffer_extSetProperties(that,dic);
+        DBGLOG("ngfx", "IOFramebuffer_extSetProperties %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+
+IOReturn NGFX::IOFramebuffer_processConnectChange(IONDRVFramebuffer *that,IOOptionBits mode)
+{
+    if (callbackNGFX && callbackNGFX->org_IOFramebuffer_processConnectChange)
+    {
+        DBGLOG("ngfx", "IOFramebuffer_processConnectChange %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_IOFramebuffer_processConnectChange(that,mode);
+        DBGLOG("ngfx", "IOFramebuffer_processConnectChange %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+
+
+IOReturn NGFX::IOFramebuffer_extSetStartupDisplayMode( OSObject * target, void * reference, IOExternalMethodArguments * args)
+{
+    if (callbackNGFX && callbackNGFX->org_IOFramebuffer_extSetStartupDisplayMode)
+    {
+        IONDRVFramebuffer *that= (IONDRVFramebuffer *)target;
+        DBGLOG("ngfx", "IOFramebuffer_extSetStartupDisplayMode %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_IOFramebuffer_extSetStartupDisplayMode(that, reference,args);
+        DBGLOG("ngfx", "IOFramebuffer_extSetStartupDisplayMode %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+
+
+
+IOReturn NGFX::IOFramebuffer_postWake(IONDRVFramebuffer *that)
+{
+    if (callbackNGFX && callbackNGFX->org_IOFramebuffer_postWake)
+    {
+        DBGLOG("ngfx", "IOFramebuffer_postWake %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_IOFramebuffer_postWake(that);
+        DBGLOG("ngfx", "IOFramebuffer_postWake %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+
+IOReturn NGFX::IOFramebuffer_systemWork(OSObject * owner,
+                                        IOInterruptEventSource * evtSrc, int intCount)
+{
+    if (callbackNGFX && callbackNGFX->org_IOFramebuffer_systemWork)
+    {
+        IOFramebuffer *that = (IOFramebuffer *) owner;
+        DBGLOG("ngfx", "IOFramebuffer_systemWork %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_IOFramebuffer_systemWork(that,evtSrc,intCount);
+        DBGLOG("ngfx", "IOFramebuffer_systemWork %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+
+
+bool NGFX::IOFramebuffer_updateOnline(IONDRVFramebuffer *that)
+{
+    if (callbackNGFX && callbackNGFX->org_IOFramebuffer_updateOnline)
+    {
+        DBGLOG("ngfx", "IOFramebuffer_updateOnline %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        bool ret = callbackNGFX->org_IOFramebuffer_updateOnline(that);
+        DBGLOG("ngfx", "IOFramebuffer_updateOnline %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+
+
+IOReturn NGFX::IONDRVFramebuffer_setDisplayMode(IONDRVFramebuffer *that,IODisplayModeID displayMode, IOIndex depth)
+{
+    if (callbackNGFX && callbackNGFX->org_IONDRVFramebuffer_setDisplayMode)
+    {
+        DBGLOG("ngfx", "IONDRVFramebuffer_setDisplayMode %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        IOReturn ret = callbackNGFX->org_IONDRVFramebuffer_setDisplayMode(that,displayMode, depth);
+        DBGLOG("ngfx", "IONDRVFramebuffer_setDisplayMode %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
         return ret;
     }
     return kIOReturnSuccess;

@@ -89,42 +89,7 @@ private:
     
     t_csfg_get_teamid           csfg_get_teamid {nullptr};
     
-    
 
-    //    static IOReturn extSetStartupDisplayModePatch(OSObject * target, void * reference, IOExternalMethodArguments * args);
-    //    static IOReturn nvda_setDetailedTiming_patch(IONDRVFramebuffer *that,IODisplayModeID mode, IOOptionBits options, void * _desc, IOByteCount descripSize);
-    //
-    //    t_extSetStartupDisplayMode orgExtSetStartupDisplayMode{nullptr};
-    
-//    t_getStartupDisplayMode  org_getStartupDisplayMode{nullptr};
-//    t_doDriverIO             org_doDriverIO{nullptr};
-//
-//
-//
-//    using t_enablecontroller = IOReturn (*)(IONDRVFramebuffer *that);
-//    using t_setDisplayMode = IOReturn (*)(IONDRVFramebuffer *that, IODisplayModeID displayMode, IOIndex depth );
-//    using t_setDetailedTimings = IOReturn (*)(IONDRVFramebuffer *that, OSArray *timings);
-//
-//    t_enablecontroller  org_enablecontroller{nullptr};
-//    t_setDisplayMode   org_setDisplayMode{nullptr};
-//    t_setDetailedTimings org_setDetailedTimings{nullptr};
-//
-//    static IOReturn nvenablecontroller(IONDRVFramebuffer *that);
-//    static IOReturn setDisplayMode(IONDRVFramebuffer *that, IODisplayModeID displayMode, IOIndex depth );
-//    static IOReturn setDetailedTimings(IONDRVFramebuffer *that, OSArray *timings);
-//
-//    //  __ZN13IOFramebuffer16extSetPropertiesEP12OSDictionary:        // IOFramebuffer::extSetProperties(OSDictionary*)
-//    using t_extSetProperties = IOReturn (*) (IOFramebuffer * that, OSDictionary * dict );
-//    // __ZN13IOFramebuffer16matchFramebufferEv:        // IOFramebuffer::matchFramebuffer()
-//    using t_matchFramebuffer = IOReturn (*) (IOFramebuffer * that);
-//    //    __ZN17IONDRVFramebuffer20processConnectChangeEPm:        // IONDRVFramebuffer::processConnectChange(unsigned long*)
-//    using t_processConnectChange= IOReturn (*)(IONDRVFramebuffer *that, uintptr_t * value );
-//
-//    t_extSetProperties org_extSetProperties{nullptr};
-//    t_matchFramebuffer org_matchFramebuffer{nullptr};
-//    t_processConnectChange org_processConnectChange{nullptr};
-//
-    
 
 
     
@@ -138,84 +103,6 @@ private:
     static IOReturn setStartupDisplayMode (IONDRVFramebuffer *that, IODisplayModeID displayMode, IOIndex depth );
     
   
-    
-//    using t_extSetStartupDisplayMode = IOReturn (*) (OSObject * target, void * reference, IOExternalMethodArguments * args);
-//
-    
-    //IOReturn IONDRVFramebuffer::setDetailedTiming(IODisplayModeID mode, IOOptionBits options, void * _desc, IOByteCount descripSize )
-    
-//    using t_setDetailedTiming = IOReturn (*)(IONDRVFramebuffer *that,IODisplayModeID mode, IOOptionBits options, void * _desc, IOByteCount descripSize);
-//
-//    using t_getStartupDisplayMode =  IOReturn  (*)(IONDRVFramebuffer *that, IODisplayModeID * displayMode, IOIndex * depth );
-//    using t_doDriverIO =  IOReturn (*)(IONDRVFramebuffer *that, UInt32 commandID, void * contents, UInt32 commandCode, UInt32 commandKind );
-//
-//
-    
-    
-    
-    
-//    static IOReturn getStartupDisplayMode(IONDRVFramebuffer *that, IODisplayModeID * displayMode, IOIndex * depth );
-
-//    static IOReturn doDriverIO(IONDRVFramebuffer *that, UInt32 commandID, void * contents, UInt32 commandCode, UInt32 commandKind );
-//
-   
-    
-   
-
-//    static IOReturn  extSetProperties(IOFramebuffer * that, OSDictionary * dict );
-//    static IOReturn matchFramebuffer(IOFramebuffer * that);
-  //  static IOReturn processConnectChange(IONDRVFramebuffer *that, uintptr_t * value);
-    
-//    //IOReturn IONDRVFramebuffer::validateDisplayMode( IODisplayModeID _mode, IOOptionBits flags, VDDetailedTimingRec ** detailed )
-//    //  __ZN17IONDRVFramebuffer19validateDisplayModeEijPP19VDDetailedTimingRec:        // IONDRVFramebuffer::validateDisplayMode(int, unsigned int, VDDetailedTimingRec**)
-//    using t_validateDisplayMode = IOReturn (*)(IONDRVFramebuffer *that, IODisplayModeID _mode, IOOptionBits flags, VDDetailedTimingRec ** detailed );
-//    t_validateDisplayMode  org_validateDisplayMode;
-//
-//    //  __ZN17IONDRVFramebuffer20getResInfoForArbModeEiP24IODisplayModeInformation:        // IONDRVFramebuffer::getResInfoForArbMode(int, IODisplayModeInformation*)
-//    using t_getResInfoForArbMode = IOReturn (*)(IONDRVFramebuffer *that, IODisplayModeID mode, IODisplayModeInformation* info);
-//    t_getResInfoForArbMode  org_getResInfoForArbMode{nullptr};
-//
-//
-////    IOReturn IONDRVFramebuffer::getResInfoForMode( IODisplayModeID modeID,
-////                                                  IODisplayModeInformation * info )
-//    using t_getResInfoForMode = IOReturn (*)(IONDRVFramebuffer *that, IODisplayModeID mode,   IODisplayModeInformation * info );
-//    t_getResInfoForMode  org_getResInfoForMode{nullptr};
-//
-//
-//    //__ZN4NVDA28getInformationForDisplayModeEiP24IODisplayModeInformation:        // NVDA::getInformationForDisplayMode(int, IODisplayModeInformation*)
-//
-//    using t_getInformationForDisplayMode = IOReturn (*)(IONDRVFramebuffer *that, IODisplayModeID mode,   IODisplayModeInformation * info  );
-//    t_getInformationForDisplayMode  org_getInformationForDisplayMode{nullptr};
-//
-//
-//    //    IOReturn IOFramebuffer::extGetInformationForDisplayMode(
-//    //                                                            OSObject * target, void * reference, IOExternalMethodArguments * args)
-//    //__ZN13IOFramebuffer31extGetInformationForDisplayModeEP8OSObjectPvP25IOExternalMethodArguments:        // IOFramebuffer::extGetInformationForDisplayMode(OSObject*, void*, IOExternalMethodArguments*)
-//
-//    using t_extGetInformationForDisplayMode = IOReturn (*)(  OSObject * target, void * reference, IOExternalMethodArguments * args );
-//    t_extGetInformationForDisplayMode  org_extGetInformationForDisplayMode{nullptr};
-//
-//
-//    static IOReturn validateDisplayMode (IONDRVFramebuffer *that, IODisplayModeID _mode, IOOptionBits flags, VDDetailedTimingRec ** detailed );
-//    static IOReturn getResInfoForArbMode (IONDRVFramebuffer *that, IODisplayModeID mode, IODisplayModeInformation* info );
-//    static IOReturn getResInfoForMode (IONDRVFramebuffer *that, IODisplayModeID mode,   IODisplayModeInformation * info );
-//    static IOReturn getInformationForDisplayMode (IONDRVFramebuffer *that, IODisplayModeID mode,   IODisplayModeInformation * info  );
-//    static IOReturn extGetInformationForDisplayMode (OSObject * target, void * reference, IOExternalMethodArguments * args);
-//
-//
-//    //__ZN17IONDRVFramebuffer19getPixelInformationEiiiP18IOPixelInformation:        // IONDRVFramebuffer::getPixelInformation(int, int, int, IOPixelInformation*)
-//    using t_getPixelInformation = IOReturn (*)( IONDRVFramebuffer *that,  IODisplayModeID displayMode, IOIndex depth,
-//                                               IOPixelAperture aperture, IOPixelInformation * pixelInfo);
-//    t_getPixelInformation  org_getPixelInformation{nullptr};
-//    static IOReturn getPixelInformation ( IONDRVFramebuffer *that,  IODisplayModeID displayMode, IOIndex depth,
-//                                            IOPixelAperture aperture, IOPixelInformation * pixelInfo);
-//
-//    //     __ZN13IOFramebuffer7doSetupEb:        // IOFramebuffer::doSetup(bool)
-//    using t_doSetup = IOReturn (*)( IONDRVFramebuffer *that,  bool full);
-//    t_doSetup  org_doSetup{nullptr};
-//    static IOReturn doSetup ( IONDRVFramebuffer *that,  bool full);
-    
-    
     
     
     
@@ -383,6 +270,42 @@ private:
     using t_IOFramebuffer_open=IOReturn (*) (IONDRVFramebuffer *that) ;
     t_IOFramebuffer_open org_IOFramebuffer_open={nullptr};
     static IOReturn IOFramebuffer_open(IONDRVFramebuffer *that) ;
+   
+    
+    using t_IOFramebuffer_processConnectChange=IOReturn (*) (IONDRVFramebuffer *that,IOOptionBits mode) ;
+    t_IOFramebuffer_processConnectChange org_IOFramebuffer_processConnectChange={nullptr};
+    static IOReturn IOFramebuffer_processConnectChange(IONDRVFramebuffer *that,IOOptionBits mode) ;
+    
+    
+    using t_IOFramebuffer_extSetProperties=IOReturn (*) (IONDRVFramebuffer *that,OSDictionary*) ;
+    t_IOFramebuffer_extSetProperties org_IOFramebuffer_extSetProperties={nullptr};
+    static IOReturn IOFramebuffer_extSetProperties(IONDRVFramebuffer *that,OSDictionary*) ;
+    
+    
+    using t_IOFramebuffer_extSetStartupDisplayMode=IOReturn (*) ( OSObject * target, void * reference, IOExternalMethodArguments * args) ;
+    t_IOFramebuffer_extSetStartupDisplayMode org_IOFramebuffer_extSetStartupDisplayMode={nullptr};
+    static IOReturn IOFramebuffer_extSetStartupDisplayMode( OSObject * target, void * reference, IOExternalMethodArguments * args) ;
+    
+    
+    using t_IOFramebuffer_postWake=IOReturn (*) (IONDRVFramebuffer *that) ;
+    t_IOFramebuffer_postWake org_IOFramebuffer_postWake={nullptr};
+    static IOReturn IOFramebuffer_postWake(IONDRVFramebuffer *that) ;
+    
+    
+    using t_IOFramebuffer_systemWork=IOReturn (*) (OSObject * owner,
+                                                   IOInterruptEventSource * evtSrc, int intCount) ;
+    t_IOFramebuffer_systemWork org_IOFramebuffer_systemWork={nullptr};
+    static IOReturn IOFramebuffer_systemWork(OSObject * owner,
+                                             IOInterruptEventSource * evtSrc, int intCount) ;
+    
+    using t_IOFramebuffer_updateOnline=bool (*) (IONDRVFramebuffer *that) ;
+    t_IOFramebuffer_updateOnline org_IOFramebuffer_updateOnline={nullptr};
+    static bool IOFramebuffer_updateOnline(IONDRVFramebuffer *that) ;
+    
+    using t_IONDRVFramebuffer_setDisplayMode=IOReturn (*) (IONDRVFramebuffer *that,int, int) ;
+    t_IONDRVFramebuffer_setDisplayMode org_IONDRVFramebuffer_setDisplayMode={nullptr};
+    static IOReturn IONDRVFramebuffer_setDisplayMode(IONDRVFramebuffer *that,int, int) ;
+    
     /**
      *  Apply kext patches for loaded kext index
      *
