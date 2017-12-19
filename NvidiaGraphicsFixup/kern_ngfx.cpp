@@ -820,16 +820,16 @@ void NGFX::processKext(KernelPatcher &patcher, size_t index, mach_vm_address_t a
                         SYSLOG("ngfx", "failed to resolve __ZN13IOFramebuffer8postWakeEv");
                     }
      
-                    method_address = patcher.solveSymbol(index, "__ZN13IOFramebuffer10systemWorkEP8OSObjectP22IOInterruptEventSourcei");
-                    if (method_address) {
-                        DBGLOG("ngfx", "obtained __ZN13IOFramebuffer10systemWorkEP8OSObjectP22IOInterruptEventSourcei");
-                        patcher.clearError();
-                        org_IOFramebuffer_systemWork = reinterpret_cast<t_IOFramebuffer_systemWork>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(IOFramebuffer_systemWork), true));
-                    }
-                    else
-                    {
-                        SYSLOG("ngfx", "failed to resolve __ZN13IOFramebuffer10systemWorkEP8OSObjectP22IOInterruptEventSourcei");
-                    }
+//                    method_address = patcher.solveSymbol(index, "__ZN13IOFramebuffer10systemWorkEP8OSObjectP22IOInterruptEventSourcei");
+//                    if (method_address) {
+//                        DBGLOG("ngfx", "obtained __ZN13IOFramebuffer10systemWorkEP8OSObjectP22IOInterruptEventSourcei");
+//                        patcher.clearError();
+//                        org_IOFramebuffer_systemWork = reinterpret_cast<t_IOFramebuffer_systemWork>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(IOFramebuffer_systemWork), true));
+//                    }
+//                    else
+//                    {
+//                        SYSLOG("ngfx", "failed to resolve __ZN13IOFramebuffer10systemWorkEP8OSObjectP22IOInterruptEventSourcei");
+//                    }
 
                     method_address = patcher.solveSymbol(index, "__ZN13IOFramebuffer12updateOnlineEv");
                     if (method_address) {
