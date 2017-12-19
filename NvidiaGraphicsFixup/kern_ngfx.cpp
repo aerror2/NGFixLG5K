@@ -1842,7 +1842,7 @@ IOReturn NGFX::NVDA_getAttribute(IONDRVFramebuffer *that,IOSelect attribute, uin
                         
                     
                     }
-                    callbackNGFX->clearDisplayOnline(that->getProvider()->getName());
+                  //  callbackNGFX->clearDisplayOnline(that->getProvider()->getName());
                 }
                 break;
             default:
