@@ -2418,7 +2418,8 @@ IOOptionBits NGFX::IOFBController_checkConnectionWork(IOFBController *that,IOOpt
        // OSObject * that = (OSObject *)pThis;
         DBGLOG("ngfx", "IOFBController_checkConnectionWork state %s begin ", szState);
         IOOptionBits ret = callbackNGFX->org_IOFBController_checkConnectionWork(that,state);
-        DBGLOG("ngfx", "IOFBController_checkConnectionWork ret %x ",ret);
+        szState = getIOOptionBitsStr(ret,sztmp);
+        DBGLOG("ngfx", "IOFBController_checkConnectionWork ret %s ",szState);
         return ret;
     }
     return 0;
