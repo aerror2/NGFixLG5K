@@ -10,7 +10,7 @@
 
 #include <Headers/kern_patcher.hpp>
 #include <Library/LegacyIOService.h>
-//#define IOFRAMEBUFFER_PRIVATE
+#define IOFRAMEBUFFER_PRIVATE
 #include <IOKit/IOUserClient.h>
 #include <IOKit/ndrvsupport/IONDRVFramebuffer.h>
 #include <IOKit/acpi/IOACPIPlatformDevice.h>
@@ -306,6 +306,38 @@ private:
     t_IONDRVFramebuffer_setDisplayMode org_IONDRVFramebuffer_setDisplayMode={nullptr};
     static IOReturn IONDRVFramebuffer_setDisplayMode(IONDRVFramebuffer *that,int, int) ;
     
+    using t_IOFramebuffer_notifyServer=IOReturn (*) (IONDRVFramebuffer *that,unsigned char) ;
+    t_IOFramebuffer_notifyServer org_IOFramebuffer_notifyServer={nullptr};
+    static IOReturn IOFramebuffer_notifyServer(IONDRVFramebuffer *that,unsigned char) ;
+    
+    using t_IOFBController_checkConnectionWork=IOOptionBits (*) (IOFBController *that,unsigned int) ;
+    t_IOFBController_checkConnectionWork org_IOFBController_checkConnectionWork={nullptr};
+    static IOOptionBits IOFBController_checkConnectionWork(IOFBController *that,unsigned int) ;
+    
+    
+    using t_IODisplayWrangler_activityChange=void (*) (IOService *that,IOFramebuffer*) ;
+    t_IODisplayWrangler_activityChange org_IODisplayWrangler_activityChange={nullptr};
+    static void IODisplayWrangler_activityChange(IOService *that,IOFramebuffer*) ;
+    
+    
+    using t_IOFramebuffer_muxPowerMessage=IOReturn (*) (IONDRVFramebuffer *that,UInt32 messageType) ;
+    t_IOFramebuffer_muxPowerMessage org_IOFramebuffer_muxPowerMessage={nullptr};
+    static IOReturn IOFramebuffer_muxPowerMessage(IONDRVFramebuffer *that,UInt32 messageType) ;
+    
+    using t_IOFramebuffer_setCaptured=void (*) (IONDRVFramebuffer *that,bool) ;
+    t_IOFramebuffer_setCaptured org_IOFramebuffer_setCaptured={nullptr};
+    static void IOFramebuffer_setCaptured(IONDRVFramebuffer *that,bool) ;
+    
+    
+    using t_IOFramebuffer_setDimDisable=void (*) (IOFramebuffer *that,bool) ;
+    t_IOFramebuffer_setDimDisable org_IOFramebuffer_setDimDisable={nullptr};
+    static void IOFramebuffer_setDimDisable(IOFramebuffer *that,bool) ;
+    
+    
+    using t_IODisplay_setDisplayPowerState=void (*) (IOService *that,unsigned long) ;
+    t_IODisplay_setDisplayPowerState org_IODisplay_setDisplayPowerState={nullptr};
+    static void IODisplay_setDisplayPowerState(IOService *that,unsigned long) ;
+    
     /**
      *  Apply kext patches for loaded kext index
      *
@@ -316,6 +348,10 @@ private:
      */
     void applyPatches(KernelPatcher &patcher, size_t index, const KextPatch *patches, size_t patchesNum, const char *name);
 	
+    using t_IOFramebuffer_deliverFramebufferNotification=IOReturn (*) (IOFramebuffer *that,int, void*) ;
+    t_IOFramebuffer_deliverFramebufferNotification org_IOFramebuffer_deliverFramebufferNotification={nullptr};
+    static IOReturn IOFramebuffer_deliverFramebufferNotification(IOFramebuffer *that,int, void*) ;
+    
 	/**
 	 *  Current progress mask
 	 */

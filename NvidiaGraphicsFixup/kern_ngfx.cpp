@@ -819,7 +819,53 @@ void NGFX::processKext(KernelPatcher &patcher, size_t index, mach_vm_address_t a
                     {
                         SYSLOG("ngfx", "failed to resolve __ZN13IOFramebuffer8postWakeEv");
                     }
-     
+                    
+                    
+                    method_address = patcher.solveSymbol(index, "__ZN17IODisplayWrangler14activityChangeEP13IOFramebuffer");
+                    if (method_address) {
+                        DBGLOG("ngfx", "obtained __ZN17IODisplayWrangler14activityChangeEP13IOFramebuffer");
+                        patcher.clearError();
+                        org_IODisplayWrangler_activityChange = reinterpret_cast<t_IODisplayWrangler_activityChange>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(IODisplayWrangler_activityChange), true));
+                    }
+                    else
+                    {
+                        SYSLOG("ngfx", "failed to resolve __ZN17IODisplayWrangler14activityChangeEP13IOFramebuffer");
+                    }
+                    
+                    method_address = patcher.solveSymbol(index, "__ZN13IOFramebuffer15muxPowerMessageEj:");
+                    if (method_address) {
+                        DBGLOG("ngfx", "obtained __ZN13IOFramebuffer15muxPowerMessageEj:");
+                        patcher.clearError();
+                        org_IOFramebuffer_muxPowerMessage = reinterpret_cast<t_IOFramebuffer_muxPowerMessage>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(IOFramebuffer_muxPowerMessage), true));
+                    }
+                    else
+                    {
+                        SYSLOG("ngfx", "failed to resolve __ZN13IOFramebuffer15muxPowerMessageEj:");
+                    }
+                    
+                    method_address = patcher.solveSymbol(index, "__ZN13IOFramebuffer11setCapturedEb");
+                    if (method_address) {
+                        DBGLOG("ngfx", "obtained __ZN13IOFramebuffer11setCapturedEb");
+                        patcher.clearError();
+                        org_IOFramebuffer_setCaptured = reinterpret_cast<t_IOFramebuffer_setCaptured>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(IOFramebuffer_setCaptured), true));
+                    }
+                    else
+                    {
+                        SYSLOG("ngfx", "failed to resolve __ZN13IOFramebuffer11setCapturedEb");
+                    }
+                    
+                    method_address = patcher.solveSymbol(index, "__ZN13IOFramebuffer13setDimDisableEb");
+                    if (method_address) {
+                        DBGLOG("ngfx", "obtained __ZN13IOFramebuffer13setDimDisableEb");
+                        patcher.clearError();
+                        org_IOFramebuffer_setDimDisable = reinterpret_cast<t_IOFramebuffer_setDimDisable>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(IOFramebuffer_setDimDisable), true));
+                    }
+                    else
+                    {
+                        SYSLOG("ngfx", "failed to resolve __ZN13IOFramebuffer13setDimDisableEb");
+                    }
+                    
+                    
 //                    method_address = patcher.solveSymbol(index, "__ZN13IOFramebuffer10systemWorkEP8OSObjectP22IOInterruptEventSourcei");
 //                    if (method_address) {
 //                        DBGLOG("ngfx", "obtained __ZN13IOFramebuffer10systemWorkEP8OSObjectP22IOInterruptEventSourcei");
@@ -842,6 +888,29 @@ void NGFX::processKext(KernelPatcher &patcher, size_t index, mach_vm_address_t a
                         SYSLOG("ngfx", "failed to resolve __ZN13IOFramebuffer12updateOnlineEv");
                     }
                     
+                    method_address = patcher.solveSymbol(index, "__ZN13IOFramebuffer12notifyServerEh");
+                    if (method_address) {
+                        DBGLOG("ngfx", "obtained __ZN13IOFramebuffer12notifyServerEh");
+                        patcher.clearError();
+                        org_IOFramebuffer_notifyServer = reinterpret_cast<t_IOFramebuffer_notifyServer>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(IOFramebuffer_notifyServer), true));
+                    }
+                    else
+                    {
+                        SYSLOG("ngfx", "failed to resolve __ZN13IOFramebuffer12notifyServerEh");
+                    }
+                    
+                    
+                    
+                    method_address = patcher.solveSymbol(index, "__ZN14IOFBController19checkConnectionWorkEj");
+                    if (method_address) {
+                        DBGLOG("ngfx", "obtained __ZN14IOFBController19checkConnectionWorkEj");
+                        patcher.clearError();
+                        org_IOFBController_checkConnectionWork = reinterpret_cast<t_IOFBController_checkConnectionWork>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(IOFBController_checkConnectionWork), true));
+                    }
+                    else
+                    {
+                        SYSLOG("ngfx", "failed to resolve __ZN14IOFBController19checkConnectionWorkEj");
+                    }
                     
                     progressState |= ProcessingState::NVDAIOGraphicsRouted;
                     
@@ -883,6 +952,28 @@ void NGFX::processKext(KernelPatcher &patcher, size_t index, mach_vm_address_t a
                     else
                     {
                         SYSLOG("ngfx", "failed to resolve __ZN17IONDRVFramebuffer14setDisplayModeEii");
+                    }
+                    
+                    
+                    method_address = patcher.solveSymbol(index, "__ZN9IODisplay20setDisplayPowerStateEm");
+                    if (method_address) {
+                        DBGLOG("ngfx", "obtained __ZN9IODisplay20setDisplayPowerStateEm");
+                        patcher.clearError();
+                        org_IODisplay_setDisplayPowerState = reinterpret_cast<t_IODisplay_setDisplayPowerState>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(IODisplay_setDisplayPowerState), true));
+                    }
+                    else
+                    {
+                        SYSLOG("ngfx", "failed to resolve __ZN9IODisplay20setDisplayPowerStateEm");
+                    }
+                    
+                    if (method_address) {
+                        DBGLOG("ngfx", "obtained __ZN13IOFramebuffer30deliverFramebufferNotificationEiPv");
+                        patcher.clearError();
+                        org_IOFramebuffer_deliverFramebufferNotification = reinterpret_cast<t_IOFramebuffer_deliverFramebufferNotification>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(IOFramebuffer_deliverFramebufferNotification), true));
+                    }
+                    else
+                    {
+                        SYSLOG("ngfx", "failed to resolve __ZN13IOFramebuffer30deliverFramebufferNotificationEiPv");
                     }
                     
                     
@@ -2299,3 +2390,143 @@ IOReturn NGFX::IONDRVFramebuffer_setDisplayMode(IONDRVFramebuffer *that,IODispla
     return kIOReturnSuccess;
 }
 
+
+
+
+IOReturn NGFX::IOFramebuffer_notifyServer(IONDRVFramebuffer *that,UInt8 state)
+{
+    if (callbackNGFX && callbackNGFX->org_IOFramebuffer_notifyServer)
+    {
+        char sztmp[255];
+        const char *szState = getIOOptionBitsStr(state,sztmp);
+        DBGLOG("ngfx", "IOFramebuffer_notifyServer %s:%s state %s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver", szState);
+        IOReturn ret = callbackNGFX->org_IOFramebuffer_notifyServer(that,state);
+        DBGLOG("ngfx", "IOFramebuffer_notifyServer %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+
+
+
+IOOptionBits NGFX::IOFBController_checkConnectionWork(IOFBController *that,IOOptionBits state)
+{
+    if (callbackNGFX && callbackNGFX->org_IOFBController_checkConnectionWork)
+    {
+        char sztmp[255];
+        const char *szState = getIOOptionBitsStr(state,sztmp);
+       // OSObject * that = (OSObject *)pThis;
+        DBGLOG("ngfx", "IOFBController_checkConnectionWork state %s begin ", szState);
+        IOOptionBits ret = callbackNGFX->org_IOFBController_checkConnectionWork(that,state);
+        DBGLOG("ngfx", "IOFBController_checkConnectionWork ret %x ",ret);
+        return ret;
+    }
+    return 0;
+}
+
+
+void NGFX::IODisplayWrangler_activityChange(IOService *that,IOFramebuffer* fb)
+{
+    if (callbackNGFX && callbackNGFX->org_IODisplayWrangler_activityChange)
+    {
+        DBGLOG("ngfx", "IODisplayWrangler_activityChange %s:%s begin fb:%s",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver", fb->getProvider()!=NULL?fb->getProvider()->getName():fb->getName());
+        callbackNGFX->org_IODisplayWrangler_activityChange(that,fb);
+        DBGLOG("ngfx", "IODisplayWrangler_activityChange %s:%s ret  ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+    }
+}
+
+
+IOReturn NGFX::IOFramebuffer_muxPowerMessage(IONDRVFramebuffer *that,UInt32 messageType)
+{
+    if (callbackNGFX && callbackNGFX->org_IOFramebuffer_muxPowerMessage)
+    {
+        DBGLOG("ngfx", "IOFramebuffer_muxPowerMessage %s:%s %x begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",messageType);
+        IOReturn ret = callbackNGFX->org_IOFramebuffer_muxPowerMessage(that,messageType);
+        DBGLOG("ngfx", "IOFramebuffer_muxPowerMessage %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
+
+void NGFX::IOFramebuffer_setCaptured(IONDRVFramebuffer *that,bool val)
+{
+    if (callbackNGFX && callbackNGFX->org_IOFramebuffer_setCaptured)
+    {
+        DBGLOG("ngfx", "IOFramebuffer_setCaptured %s:%s begin value:%s ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver", val?"true":"false");
+        callbackNGFX->org_IOFramebuffer_setCaptured(that,val);
+        DBGLOG("ngfx", "IOFramebuffer_setCaptured %s:%s ret ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+    }
+}
+
+
+void NGFX::IOFramebuffer_setDimDisable(IOFramebuffer *that,bool val)
+{
+    if (callbackNGFX && callbackNGFX->org_IOFramebuffer_setDimDisable)
+    {
+        DBGLOG("ngfx", "IOFramebuffer_setDimDisable %s:%s begin %s",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",val?"true":"false");
+        callbackNGFX->org_IOFramebuffer_setDimDisable(that,val);
+        DBGLOG("ngfx", "IOFramebuffer_setDimDisable %s:%s ret",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+    }
+}
+
+void NGFX::IODisplay_setDisplayPowerState(IOService *that,unsigned long state)
+{
+    if (callbackNGFX && callbackNGFX->org_IODisplay_setDisplayPowerState)
+    {
+        DBGLOG("ngfx", "IODisplay_setDisplayPowerState %s:%s begin state %lX ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver", state);
+        callbackNGFX->org_IODisplay_setDisplayPowerState(that,state);
+        DBGLOG("ngfx", "IODisplay_setDisplayPowerState %s:%s ret",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+    }
+}
+
+const char *getNotificationEventName(IOIndex event, char * szTmp)
+{
+    switch (event) {
+        case kIOFBNotifyDisplayModeWillChange: return "kIOFBNotifyDisplayModeWillChange";
+        case kIOFBNotifyDisplayModeDidChange: return "kIOFBNotifyDisplayModeDidChange";
+        case kIOFBNotifyWillSleep: return "kIOFBNotifyWillSleep";
+        case kIOFBNotifyDidWake: return "kIOFBNotifyDidWake";
+        case kIOFBNotifyDidPowerOff: return "kIOFBNotifyDidPowerOff";
+        case kIOFBNotifyWillPowerOn: return "kIOFBNotifyWillPowerOn";
+    //    case kIOFBNotifyDidSleep: return "kIOFBNotifyDidSleep";
+     //   case kIOFBNotifyWillWake: return "kIOFBNotifyWillWake";
+        case kIOFBNotifyWillPowerOff: return "kIOFBNotifyWillPowerOff";
+        case kIOFBNotifyDidPowerOn: return "kIOFBNotifyDidPowerOn";
+        case kIOFBNotifyWillChangeSpeed: return "kIOFBNotifyWillChangeSpeed";
+        case kIOFBNotifyDidChangeSpeed: return "kIOFBNotifyDidChangeSpeed";
+        case kIOFBNotifyClamshellChange: return "kIOFBNotifyClamshellChange";
+        case kIOFBNotifyCaptureChange: return "kIOFBNotifyCaptureChange";
+        case kIOFBNotifyOnlineChange: return "kIOFBNotifyOnlineChange";
+        case kIOFBNotifyDisplayDimsChange: return "kIOFBNotifyDisplayDimsChange";
+        case kIOFBNotifyProbed: return "kIOFBNotifyProbed";
+        case kIOFBNotifyVRAMReady: return "kIOFBNotifyVRAMReady";
+        case kIOFBNotifyWillNotify: return "kIOFBNotifyWillNotify";
+        case kIOFBNotifyDidNotify: return "kIOFBNotifyDidNotify";
+        case kIOFBNotifyWSAAWillEnterDefer: return "kIOFBNotifyWSAAWillEnterDefer";
+        case kIOFBNotifyWSAAWillExitDefer: return "kIOFBNotifyWSAAWillExitDefer";
+        case kIOFBNotifyWSAADidEnterDefer: return "kIOFBNotifyWSAADidEnterDefer";
+        case kIOFBNotifyWSAADidExitDefer: return "kIOFBNotifyWSAADidExitDefer";
+       // case kIOFBNotifyWSAAEnterDefer: return "kIOFBNotifyWSAAEnterDefer";
+      //  case kIOFBNotifyWSAAExitDefer: return "kIOFBNotifyWSAAExitDefer";
+        case kIOFBNotifyTerminated: return "kIOFBNotifyTerminated";
+        default:
+            snprintf(szTmp, 30, "%X",event);
+            return szTmp;
+            break;
+    }
+    return "unknown";
+}
+
+IOReturn NGFX::IOFramebuffer_deliverFramebufferNotification(IOFramebuffer *that, IOIndex event, void * info)
+{
+    if (callbackNGFX && callbackNGFX->org_IOFramebuffer_deliverFramebufferNotification)
+    {
+        char sztmp[30];
+        const char *szevent = getNotificationEventName(event,sztmp);
+        DBGLOG("ngfx", "IOFramebuffer_deliverFramebufferNotification %s:%s event: %s begin" ,that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",szevent);
+        IOReturn ret = callbackNGFX->org_IOFramebuffer_deliverFramebufferNotification(that,event,info);
+        DBGLOG("ngfx", "IOFramebuffer_deliverFramebufferNotification %s:%s event: %s  ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",szevent, ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
+}
