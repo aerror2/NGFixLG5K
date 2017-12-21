@@ -340,6 +340,11 @@ private:
     t_IODisplay_setDisplayPowerState org_IODisplay_setDisplayPowerState={nullptr};
     static void IODisplay_setDisplayPowerState(IOService *that,unsigned long) ;
     
+    
+    using t_IOFramebuffer_suspend=bool (*) (IONDRVFramebuffer *that,bool) ;
+    t_IOFramebuffer_suspend org_IOFramebuffer_suspend={nullptr};
+    static bool IOFramebuffer_suspend(IONDRVFramebuffer *that,bool) ;
+    
     /**
      *  Apply kext patches for loaded kext index
      *

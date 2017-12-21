@@ -934,6 +934,17 @@ void NGFX::processKext(KernelPatcher &patcher, size_t index, mach_vm_address_t a
                         SYSLOG("ngfx", "failed to resolve __ZN13IOFramebuffer30deliverFramebufferNotificationEiPv");
                     }
                     
+                    method_address = patcher.solveSymbol(index, "__ZN13IOFramebuffer7suspendEb");
+                    if (method_address) {
+                        DBGLOG("ngfx", "obtained __ZN13IOFramebuffer7suspendEb");
+                        patcher.clearError();
+                        org_IOFramebuffer_suspend = reinterpret_cast<t_IOFramebuffer_suspend>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(IOFramebuffer_suspend), true));
+                    }
+                    else
+                    {
+                        SYSLOG("ngfx", "failed to resolve __ZN13IOFramebuffer7suspendEb");
+                    }
+                    
                     
                     progressState |= ProcessingState::NVDAIOGraphicsRouted;
                     
@@ -2535,3 +2546,16 @@ IOReturn NGFX::IOFramebuffer_deliverFramebufferNotification(IOFramebuffer *that,
     }
     return kIOReturnSuccess;
 }
+
+bool NGFX::IOFramebuffer_suspend(IONDRVFramebuffer *that,bool now)
+{
+    if (callbackNGFX && callbackNGFX->org_IOFramebuffer_suspend)
+    {
+        DBGLOG("ngfx", "IOFramebuffer_suspend %s:%s now:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver", now?"true":"false");
+        bool ret = callbackNGFX->org_IOFramebuffer_suspend(that, now);
+        DBGLOG("ngfx", "IOFramebuffer_suspend %s:%s ret %s ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret?"true":"false");
+        return ret;
+    }
+    return true;
+}
+
