@@ -1937,13 +1937,13 @@ IOReturn NGFX::NVDA_getAttribute(IONDRVFramebuffer *that,IOSelect attribute, uin
 //                            that->dpProcessInterrupt();
                             //that->setAttributeForConnection(0, kConnectionHandleDisplayPortEvent, uintptr_t(&evt));
                             
-                            if(strcmp(that->getProvider()->getName(),"NVDA,Display-B")==0 )
-                            {
-                                IOSleep(10000);
-                            }
-
-                            *value = kIOFBDisplayState_AlreadyActive;
-                            return kIOReturnSuccess;
+//                            if(strcmp(that->getProvider()->getName(),"NVDA,Display-B")==0 )
+//                            {
+//                                IOSleep(10000);
+//                            }
+//
+//                            *value = kIOFBDisplayState_AlreadyActive;
+//                            return kIOReturnSuccess;
                         }
                         
                     
