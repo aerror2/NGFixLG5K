@@ -988,7 +988,16 @@ void NGFX::processKext(KernelPatcher &patcher, size_t index, mach_vm_address_t a
                         SYSLOG("ngfx", "failed to resolve __ZN17IONDRVFramebuffer14setDisplayModeEii");
                     }
                     
-                    
+                    method_address = patcher.solveSymbol(index, "__ZN17IONDRVFramebuffer19getPixelInformationEiiiP18IOPixelInformation");
+                    if (method_address) {
+                        DBGLOG("ngfx", "obtained __ZN17IONDRVFramebuffer19getPixelInformationEiiiP18IOPixelInformation");
+                        patcher.clearError();
+                        org_IONDRVFramebuffer_getPixelInformation = reinterpret_cast<t_IONDRVFramebuffer_getPixelInformation>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(IONDRVFramebuffer_getPixelInformation), true));
+                    }
+                    else
+                    {
+                        SYSLOG("ngfx", "failed to resolve __ZN17IONDRVFramebuffer19getPixelInformationEiiiP18IOPixelInformation");
+                    }
            
                     
                     
@@ -2327,11 +2336,14 @@ IOReturn NGFX::IOFramebuffer_extSetProperties(IONDRVFramebuffer *that,OSDictiona
 
 IOReturn NGFX::IOFramebuffer_processConnectChange(IONDRVFramebuffer *that,IOOptionBits mode)
 {
+    static const char * processConnectChangeModeNames[] =
+    { "", "fg", "bg", "fgOff", "bgOff" };
+    
     if (callbackNGFX && callbackNGFX->org_IOFramebuffer_processConnectChange)
     {
-        DBGLOG("ngfx", "IOFramebuffer_processConnectChange %s:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver");
+        DBGLOG("ngfx", "IOFramebuffer_processConnectChange %s:%s mode:%s begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",processConnectChangeModeNames[mode]);
         IOReturn ret = callbackNGFX->org_IOFramebuffer_processConnectChange(that,mode);
-        DBGLOG("ngfx", "IOFramebuffer_processConnectChange %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        DBGLOG("ngfx", "IOFramebuffer_processConnectChange %s:%s mode:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",processConnectChangeModeNames[mode],ret);
         return ret;
     }
     return kIOReturnSuccess;
@@ -2557,5 +2569,19 @@ bool NGFX::IOFramebuffer_suspend(IONDRVFramebuffer *that,bool now)
         return ret;
     }
     return true;
+}
+
+IOReturn NGFX::IONDRVFramebuffer_getPixelInformation(IONDRVFramebuffer *that,
+                                                     IODisplayModeID displayMode, IOIndex depth,
+                                                     IOPixelAperture aperture, IOPixelInformation * info)
+{
+    if (callbackNGFX && callbackNGFX->org_IONDRVFramebuffer_getPixelInformation)
+    {
+        DBGLOG("ngfx", "IONDRVFramebuffer_getPixelInformation %s:%s displayMode: %u depth:%u aperture:%u begin ",that->getName(),that->getProvider()!=NULL?that->getProvider()->getName():"nopriver", displayMode,depth,aperture);
+        IOReturn ret = callbackNGFX->org_IONDRVFramebuffer_getPixelInformation(that,displayMode,depth,aperture,info);
+        DBGLOG("ngfx", "IONDRVFramebuffer_getPixelInformation %s:%s ret %x ",that->getName(), that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",ret);
+        return ret;
+    }
+    return kIOReturnSuccess;
 }
 

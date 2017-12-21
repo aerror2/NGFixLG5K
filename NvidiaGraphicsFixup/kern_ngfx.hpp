@@ -345,6 +345,11 @@ private:
     t_IOFramebuffer_suspend org_IOFramebuffer_suspend={nullptr};
     static bool IOFramebuffer_suspend(IONDRVFramebuffer *that,bool) ;
     
+    
+    using t_IONDRVFramebuffer_getPixelInformation=IOReturn (*) (IONDRVFramebuffer *that,int, int, int, IOPixelInformation*) ;
+    t_IONDRVFramebuffer_getPixelInformation org_IONDRVFramebuffer_getPixelInformation={nullptr};
+    static IOReturn IONDRVFramebuffer_getPixelInformation(IONDRVFramebuffer *that,int, int, int, IOPixelInformation*) ;
+    
     /**
      *  Apply kext patches for loaded kext index
      *
