@@ -10,11 +10,13 @@
 
 #include <Headers/kern_patcher.hpp>
 #include <Library/LegacyIOService.h>
-#define IOFRAMEBUFFER_PRIVATE
+//#define IOFRAMEBUFFER_PRIVATE
 #include <IOKit/IOUserClient.h>
 #include <IOKit/ndrvsupport/IONDRVFramebuffer.h>
 #include <IOKit/acpi/IOACPIPlatformDevice.h>
 #include <IOKit/pci/IOPCIDevice.h>
+
+//class IOFBController;
 
 struct KextPatch {
     KernelPatcher::LookupPatch patch;

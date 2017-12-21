@@ -912,6 +912,29 @@ void NGFX::processKext(KernelPatcher &patcher, size_t index, mach_vm_address_t a
                         SYSLOG("ngfx", "failed to resolve __ZN14IOFBController19checkConnectionWorkEj");
                     }
                     
+                    method_address = patcher.solveSymbol(index, "__ZN9IODisplay20setDisplayPowerStateEm");
+                    if (method_address) {
+                        DBGLOG("ngfx", "obtained __ZN9IODisplay20setDisplayPowerStateEm");
+                        patcher.clearError();
+                        org_IODisplay_setDisplayPowerState = reinterpret_cast<t_IODisplay_setDisplayPowerState>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(IODisplay_setDisplayPowerState), true));
+                    }
+                    else
+                    {
+                        SYSLOG("ngfx", "failed to resolve __ZN9IODisplay20setDisplayPowerStateEm");
+                    }
+                    
+                    method_address = patcher.solveSymbol(index, "__ZN13IOFramebuffer30deliverFramebufferNotificationEiPv");
+                    if (method_address) {
+                        DBGLOG("ngfx", "obtained __ZN13IOFramebuffer30deliverFramebufferNotificationEiPv");
+                        patcher.clearError();
+                        org_IOFramebuffer_deliverFramebufferNotification = reinterpret_cast<t_IOFramebuffer_deliverFramebufferNotification>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(IOFramebuffer_deliverFramebufferNotification), true));
+                    }
+                    else
+                    {
+                        SYSLOG("ngfx", "failed to resolve __ZN13IOFramebuffer30deliverFramebufferNotificationEiPv");
+                    }
+                    
+                    
                     progressState |= ProcessingState::NVDAIOGraphicsRouted;
                     
                 }
@@ -955,26 +978,7 @@ void NGFX::processKext(KernelPatcher &patcher, size_t index, mach_vm_address_t a
                     }
                     
                     
-                    method_address = patcher.solveSymbol(index, "__ZN9IODisplay20setDisplayPowerStateEm");
-                    if (method_address) {
-                        DBGLOG("ngfx", "obtained __ZN9IODisplay20setDisplayPowerStateEm");
-                        patcher.clearError();
-                        org_IODisplay_setDisplayPowerState = reinterpret_cast<t_IODisplay_setDisplayPowerState>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(IODisplay_setDisplayPowerState), true));
-                    }
-                    else
-                    {
-                        SYSLOG("ngfx", "failed to resolve __ZN9IODisplay20setDisplayPowerStateEm");
-                    }
-                    
-                    if (method_address) {
-                        DBGLOG("ngfx", "obtained __ZN13IOFramebuffer30deliverFramebufferNotificationEiPv");
-                        patcher.clearError();
-                        org_IOFramebuffer_deliverFramebufferNotification = reinterpret_cast<t_IOFramebuffer_deliverFramebufferNotification>(patcher.routeFunction(method_address, reinterpret_cast<mach_vm_address_t>(IOFramebuffer_deliverFramebufferNotification), true));
-                    }
-                    else
-                    {
-                        SYSLOG("ngfx", "failed to resolve __ZN13IOFramebuffer30deliverFramebufferNotificationEiPv");
-                    }
+           
                     
                     
 //                    auto method_address = patcher.solveSymbol(index, "__ZN17IONDRVFramebuffer17setDetailedTimingEijPvy");
@@ -1486,11 +1490,11 @@ IOReturn NGFX::NVDA_setAttributeForConnection(IONDRVFramebuffer *that , IOIndex 
             
             DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:%s value:%s",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,attributeName, eventname);
             
-            if(evt == kIODPEventIdle)
+            if(value!=0 && evt != kIODPEventStart)
             {
                 DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:%s value:%s end SKIP IT",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,attributeName, eventname);
-
-                return kIOReturnSuccess;
+                *((uintptr_t *)value) = kIODPEventStart;
+                //return kIOReturnSuccess;
             }
         }
         else
@@ -1912,23 +1916,23 @@ IOReturn NGFX::NVDA_getAttribute(IONDRVFramebuffer *that,IOSelect attribute, uin
                         
                         if(konline!=0)
                         {
-                            //uintptr_t evt=kIODPEventStart;
+//                            uintptr_t evt=kIODPEventStart;
 //                            const char *eventname =getDisplayPortEventName(evt);
 //
 //                            DBGLOG("ngfx", "NVDA_setAttributeForConnection %s:%s index:%u attribute:%s value:%s",that->getName(),  that->getProvider()!=NULL?that->getProvider()->getName():"nopriver",connectIndex,attributeName, eventname);
-//
 //                            if(evt == kIODPEventIdle)
 //                            {
 //
-                           // that->dpProcessInterrupt();
-//                            that->setAttributeForConnection(0, kConnectionHandleDisplayPortEvent, uintptr_t(&evt));
-//                            if(strcmp(that->getProvider()->getName(),"NVDA,Display-B")==0 )
-//                            {
-//                                IOSleep(10000);
-//                            }
-//
-//                            *value = kIOFBDisplayState_AlreadyActive;
-//                           return kIOReturnSuccess;
+//                            that->dpProcessInterrupt();
+                            //that->setAttributeForConnection(0, kConnectionHandleDisplayPortEvent, uintptr_t(&evt));
+                            
+                            if(strcmp(that->getProvider()->getName(),"NVDA,Display-B")==0 )
+                            {
+                                IOSleep(10000);
+                            }
+
+                            *value = kIOFBDisplayState_AlreadyActive;
+                            return kIOReturnSuccess;
                         }
                         
                     
